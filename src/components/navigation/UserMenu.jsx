@@ -62,6 +62,14 @@ const UserMenu = () => {
                     Мои книги
                 </MenuItem>
 
+                <MenuItem
+                    component={Link}
+                    to="/EditingBook"
+                    onClick={handleClose}
+                >
+                    Добавить книгу
+                </MenuItem>
+
                 <MenuItem onClick={handleClose}>Выйти</MenuItem>
             </Menu>
         </Box>

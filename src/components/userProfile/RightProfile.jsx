@@ -1,20 +1,23 @@
 import {Box, Typography} from "@mui/material";
-import logo from "../../assets/assets.png";
 import React from "react";
+import {useSelector} from "react-redux";
 
 const RightProfile = () => {
+    const {user} = useSelector((state) => state.user);
+
+    if (!user) {
+        return <Box>Загрузка данных...</Box>;
+    }
+
     return (
         <Box sx={{width: '40%',}}>
-            <Box sx={{
-                width: 'auto',
-                borderRadius: 2,
-                boxShadow: 3,}}>
-            <Typography variant="h5" align={"center"}>Lilligg</Typography>
+            <Box>
+            <Typography variant="h5" align={"center"}>{user.name}</Typography>
             <Box
                 component="img"
-                src={logo}
+                src={user.avatar}
                 alt="Аватар"
-                sx={{ width: '50%', margin: '0 auto', display: 'block', height: 'auto'}}
+                sx={{ width: '50%', margin: '0 auto', display: 'block', height: 'auto',}}
             />
             </Box>
         </Box>
