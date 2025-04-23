@@ -1,8 +1,8 @@
-import React from "react";
-import {Box, Button, TextField, Typography} from "@mui/material";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import PasswordField from "../components/PasswordField.jsx";
 
 const Registration = () => {
+
     return (
         <Box sx = {{marginTop: 5}}>
             <Typography variant="h5" align={"center"}>Зарегистрируйтесь в системе, чтобы получить доступ к сайту</Typography>

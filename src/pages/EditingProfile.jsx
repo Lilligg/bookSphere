@@ -1,9 +1,9 @@
-import {Avatar, Box, Button, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {setUser} from "../redux/user/userSlice.js";
+import { Avatar, Box, Button, Typography } from "@mui/material";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../redux/user/userSlice.js";
 import FieldEditingForm from "../components/FieldEditingForm.jsx";
-import {genreOptions, genderOptions, readingFormatOptions, readingTimeOptions, readingSpeedOptions, readingPlacesOptions, languageOptions} from "../constants/fieldOptions.js";
+import {EDITING_PROFILE_FIELD_GROUPS} from "../constants/EDITING_PROFILE_FIELD_GROUPS.js";
 
 const EditingProfile = () => {
     const dispatch = useDispatch();
@@ -55,6 +55,7 @@ const EditingProfile = () => {
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
+
         if (!file) return;
 
         if (!file.type.match('image.*')) {
@@ -74,8 +75,8 @@ const EditingProfile = () => {
                 avatar: reader.result,
             }));
         };
-        reader.readAsDataURL(file);
 
+        reader.readAsDataURL(file);
     };
 
     const handleRemoveAvatar = () => {
@@ -105,121 +106,13 @@ const EditingProfile = () => {
         dispatch(setUser(formData));
     };
 
-    const fieldGroups = [
-        {
-            title: "Основная информация",
-            fields: [
-                {
-                    label: "Имя",
-                    name: "name",
-                    type: "text",
-                    required: true
-                },
-                {
-                    label: "Город",
-                    name: "city",
-                    type: "text"
-                },
-                {
-                    label: "Дата рождения",
-                    name: "dateOfBirth",
-                    type: "date",
-                    inputProps: {
-                        max: new Date().toISOString().split('T')[0]
-                    }
-                },
-                {
-                    label: "Пол",
-                    name: "gender",
-                    type: "select",
-                    options: genderOptions
-                },
-                {
-                    label: "О себе",
-                    name: "aboutYourself",
-                    type: "multiline",
-                    rows: 4,
-                    placeholder: "Расскажите о своих интересах, любимых книгах..."
-                }
-            ]
-        },
-        {
-            title: "Литературные предпочтения",
-            fields: [
-                {
-                    label: "Любимые жанры",
-                    name: "favoriteGenres",
-                    type: "multiselect",
-                    options: genreOptions
-                },
-                {
-                    label: "Нелюбимые жанры",
-                    name: "unlovedGenres",
-                    type: "multiselect",
-                    options: genreOptions
-                },
-                {
-                    label: "Любимые авторы",
-                    name: "favoriteAuthors",
-                    type: "text",
-                    placeholder: "Перечислите через запятую"
-                },
-                {
-                    label: "Самая перечитываемая книга",
-                    name: "favoriteRereadBook",
-                    type: "text"
-                },
-                {
-                    label: "Книга, которая разочаровала",
-                    name: "disappointingBook",
-                    type: "text"
-                },
-                {
-                    label: "Формат чтения",
-                    name: "readingFormat",
-                    type: "multiselect",
-                    options: readingFormatOptions
-                },
-                {
-                    label: "Любимая книжная серия",
-                    name: "favoriteBookSeries",
-                    type: "text"
-                },
-                {
-                    label: "Языки чтения",
-                    name: "readingLanguage",
-                    type: "multiselect",
-                    options: languageOptions
-                },
-                {
-                    label: "Скорость чтения",
-                    name: "readingSpeed",
-                    type: "select",
-                    options: readingSpeedOptions
-                },
-                {
-                    label: "Любимое время чтения",
-                    name: "readingTime",
-                    type: "multiselect",
-                    options: readingTimeOptions
-                },
-                {
-                    label: "Любимое место для чтения",
-                    name: "favoriteReadingPlaces",
-                    type: "multiselect",
-                    options: readingPlacesOptions
-                },
-            ]
-        }
-    ];
-
     return (
         <Box sx={{ maxWidth: 500, mx: 'auto', p: 3 }}>
             <Typography variant="h5" gutterBottom>
                 Редактирование профиля
             </Typography>
 
-            {fieldGroups.map((group, index) => (
+            {EDITING_PROFILE_FIELD_GROUPS.map((group, index) => (
                 <FieldEditingForm
                     key={index}
                     group={group}

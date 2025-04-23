@@ -1,6 +1,7 @@
-import {Box, Typography} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
-const Quote = ({ data }) => {
+const Quote = (props) => {
+const { data } = props;
     return (
         <Box>
             {data.map((quote, author, index) => (
@@ -12,4 +13,5 @@ const Quote = ({ data }) => {
         </Box>
     )
 }
+
 export default Quote

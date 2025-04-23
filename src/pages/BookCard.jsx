@@ -1,4 +1,4 @@
-import {Typography} from "@mui/material";
+import { Typography } from "@mui/material";
 import TabBook from "../components/bookCard/TabBook.jsx";
 import BookInfo from "../components/bookCard/BookInfo.jsx";
 
@@ -11,4 +11,5 @@ const BookCard = () => {
         </>
     )
 }
+
 export default BookCard

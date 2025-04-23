@@ -1,27 +1,22 @@
-import React from "react";
-import {Box} from "@mui/material";
+import { Box } from "@mui/material";
 import InformPanel from "../InformPanel.jsx";
-import {useSelector} from "react-redux";
+import { useSelector } from "react-redux";
+import { PERSONAL_INFORMATION_TAB_FIELD_GROUP } from "../../constants/userProfile/PERSONAL_INFORMATION_TAB_FIELD_GROUP.js";
 
 const PersonalInformationTab = () => {
-    const {user} = useSelector((state) => state.user);
+    const { user } = useSelector((state) => state.user);
 
     if (!user) {
         return <Box>Загрузка данных...</Box>;
     }
 
-    const info = [
-        { label: "Никнейм", value: user.name || "Не указан" },
-        { label: "Город", value: user.city || "Не указан" },
-        { label: "Дата рождения", value: user.dateOfBirth || "Не указан" },
-        { label: "Пол", value: user.gender || "Не указан" },
-        { label: "О себе", value: user.aboutYourself || "Не указан" },
-    ];
+    const PersonalInformation = PERSONAL_INFORMATION_TAB_FIELD_GROUP(user)
 
     return (
         <Box>
-            <InformPanel data={info} />
+            <InformPanel data={PersonalInformation} />
         </Box>
     );
 }
+
 export default PersonalInformationTab

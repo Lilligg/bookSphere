@@ -1,11 +1,16 @@
-import React from "react";
-import { Box, Button, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, Typography } from "@mui/material";
+import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
 import imgBook from "../assets/assets.png";
 import { Link } from "react-router-dom";
 
-const ItemBook = ({ book }) => {
+const ItemBook = (props) => {
+    const { book } = props;
+
     return (
-        <Card sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Card sx={{
+            height: "100%",
+            display: "flex",
+            flexDirection: "column" }}
+        >
             <CardHeader
                 title={book.title || "Без названия"}
                 subheader={book.author || "Автор не указан"}

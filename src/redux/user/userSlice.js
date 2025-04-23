@@ -33,6 +33,7 @@ const userSlice = createSlice({
             }
             state.isAuth = !!action.payload;
         },
+
         logout: (state) => {
             state.user = null;
             state.isAuth = false;
@@ -41,6 +42,7 @@ const userSlice = createSlice({
         setLoading: (state, action) => {
             state.isLoading = action.payload;
         },
+
         setError: (state, action) => {
             state.error = action.payload;
         },

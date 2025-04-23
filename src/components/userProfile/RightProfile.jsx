@@ -1,9 +1,8 @@
-import {Box, Typography} from "@mui/material";
-import React from "react";
-import {useSelector} from "react-redux";
+import { Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
 const RightProfile = () => {
-    const {user} = useSelector((state) => state.user);
+    const { user } = useSelector((state) => state.user);
 
     if (!user) {
         return <Box>Загрузка данных...</Box>;
@@ -12,12 +11,18 @@ const RightProfile = () => {
     return (
         <Box sx={{width: '40%',}}>
             <Box>
-            <Typography variant="h5" align={"center"}>{user.name}</Typography>
+            <Typography variant="h5" align={"center"}>
+                {user.name}
+            </Typography>
             <Box
                 component="img"
                 src={user.avatar}
                 alt="Аватар"
-                sx={{ width: '50%', margin: '0 auto', display: 'block', height: 'auto',}}
+                sx={{
+                    width: '50%',
+                    margin: '0 auto',
+                    display: 'block',
+                    height: 'auto',}}
             />
             </Box>
         </Box>

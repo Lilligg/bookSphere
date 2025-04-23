@@ -1,13 +1,12 @@
-import React from "react";
-import {Box} from "@mui/material";
-import LeftProfile from "../components/userProfile/LeftProfile.jsx";
+import { Box } from "@mui/material";
+import LeftProfileTab from "../components/userProfile/LeftProfileTab.jsx";
 import RightProfile from "../components/userProfile/RightProfile.jsx";
 
 const UserProfile = () => {
 
     return (
         <Box display="flex">
-           <LeftProfile/>
+           <LeftProfileTab/>
            <RightProfile/>
         </Box>
     )

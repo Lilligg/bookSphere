@@ -17,9 +17,8 @@ const ListBooks = () => {
         return (
             <Box textAlign="center">
                 <Typography variant="h5" gutterBottom>
-                    Список прочитанных книг
+                    Книги не найдены
                 </Typography>
-                <Typography>Книги не найдены</Typography>
             </Box>
         );
     }

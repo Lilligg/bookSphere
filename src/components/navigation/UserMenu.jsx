@@ -1,8 +1,8 @@
-import {Avatar, Box, Button, Menu, MenuItem} from "@mui/material";
+import { useState } from "react";
+import { Avatar, Box, Button, Menu, MenuItem } from "@mui/material";
 import avatar from "./../../assets/assets.png"
-import {useState} from "react";
-import {Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
+import { USER_MENU } from "../../constants/navigation/USER_MENU.js";
 
 const UserMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -38,38 +38,15 @@ const UserMenu = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem
-                    component={Link}
-                    to="/UserProfile"
-                    onClick={handleClose}
-                >
-                    Профиль
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/EditingProfile"
-                    onClick={handleClose}
-                >
-                    Настройки профиля
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/ListBooks"
-                    onClick={handleClose}
-                >
-                    Мои книги
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/EditingBook"
-                    onClick={handleClose}
-                >
-                    Добавить книгу
-                </MenuItem>
-
+                {USER_MENU.map((item) => (
+                    <MenuItem
+                        component={Link}
+                        to={item.link}
+                        onClick={handleClose}
+                    >
+                        {item.label}
+                    </MenuItem>))
+                }
                 <MenuItem onClick={handleClose}>Выйти</MenuItem>
             </Menu>
         </Box>

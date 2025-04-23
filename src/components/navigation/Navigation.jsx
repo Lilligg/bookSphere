@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import { useState } from 'react';
 import {
     AppBar,
     Box, Button,
@@ -6,15 +6,14 @@ import {
     Typography
 } from "@mui/material";
 import logo from "./../../assets/assets.png"
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
 import UserMenu from "./UserMenu.jsx";
-
 
 const Navigation = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleLogOut = () => {
-    setIsLoggedIn(!isLoggedIn);
+        setIsLoggedIn(!isLoggedIn);
     }
 
     const renderAuthButtons = () => (
@@ -26,7 +25,7 @@ const Navigation = () => {
 
     return (
         <AppBar position="static" >
-            <Toolbar sx={{ maxWidth: 1200, width: '100%', margin: '0 auto'}}>
+            <Toolbar sx={{ maxWidth: 1200, width: '100%', margin: '0 auto' }}>
                 <Box
                     component="img"
                     src={logo}

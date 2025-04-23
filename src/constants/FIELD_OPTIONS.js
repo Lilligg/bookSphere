@@ -1,10 +1,10 @@
-export const genderOptions = [
+export const GENDER_OPTIONS = [
     { value: "Не указано", label: "Не указано" },
     { value: "Мужской", label: "Мужской" },
     { value: "Женский", label: "Женский" }
 ];
 
-export const genreOptions = [
+export const GENRE_OPTIONS = [
     { value: "Автобиография", label: "Автобиография" },
     { value: "Антиутопия", label: "Антиутопия" },
     { value: "Бизнес", label: "Бизнес" },
@@ -40,32 +40,32 @@ export const genreOptions = [
     { value: "Юмор", label: "Юмор" }
 ];
 
-export const readingFormatOptions = [
+export const READING_FORMAT_OPTIONS = [
     { value: "Бумажная книга", label: "Бумажная книга" },
     { value: "Электронная книга", label: "Электронная книга" },
     { value: "Аудиокнига", label: "Аудиокнига" }
 ];
 
-export const languageOptions = [
+export const LANGUAGE_OPTIONS = [
     { value: "Русский", label: "Русский" },
     { value: "Английский", label: "Английский" },
     { value: "Другой", label: "Другой" }
 ];
 
-export const readingSpeedOptions = [
+export const READING_SPEED_OPTIONS = [
     { value: "Медленно", label: "Медленно (1-2 книги в месяц)" },
     { value: "Средне", label: "Средне (3-4 книги в месяц)" },
     { value: "Быстро", label: "Быстро (5+ книг в месяц)" }
 ];
 
-export const readingTimeOptions = [
+export const READING_TIME_OPTIONS = [
     { value: "Утро", label: "Утро" },
     { value: "День", label: "День" },
     { value: "Вечер", label: "Вечер" },
     { value: "Ночь", label: "Ночь" }
 ];
 
-export const readingPlacesOptions = [
+export const READING_PLACES_OPTIONS = [
     { value: "Дома", label: "Дома" },
     { value: "В транспорте", label: "В транспорте" },
     { value: "На природе", label: "На природе" },

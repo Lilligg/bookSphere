@@ -1,10 +1,11 @@
-import {Card, CardContent, CardMedia, Typography, Button, Box, IconButton, Grid} from '@mui/material';
+import { Card, CardContent, CardMedia, Typography, Button, Box, IconButton, Grid } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useDispatch } from 'react-redux';
 import { removePersonage } from '../redux/book/bookSlice';
 
-const PersonageCard = ({ personage, bookId }) => {
+const PersonageCard = (props) => {
+    const { personage, bookId } = props;
     const dispatch = useDispatch();
 
     const handleDelete = () => {
@@ -43,4 +44,5 @@ const PersonageCard = ({ personage, bookId }) => {
         </Grid>
     );
 };
+
 export default PersonageCard;

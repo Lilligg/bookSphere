@@ -1,11 +1,12 @@
-import {Box, Typography} from "@mui/material";
-import React, {useEffect} from "react";
+import { Box } from "@mui/material";
+import { useEffect } from "react";
 import logo from "../../assets/assets.png";
-import {Rating} from "@mui/lab";
+import { Rating } from "@mui/lab";
 import InformPanel from "../InformPanel.jsx";
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {setCurrentBookById} from "../../redux/book/bookSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { setCurrentBookById } from "../../redux/book/bookSlice.js";
+import { MAIN_INFORMATION_BOOK } from "../../constants/bookCard/MAIN_INFORMATION_BOOK.js";
 
 const BookInfo = () => {
     const { id } = useParams();
@@ -22,28 +23,29 @@ const BookInfo = () => {
         return <Box p={3}>Загрузка данных книги...</Box>;
     }
 
-    const mainInfo = [
-        { label: "Название", value: currentBook.title || "Не указано" },
-        { label: "Автор", value: currentBook.author || "Не указан" },
-        { label: "Год публикации", value: currentBook.yearPublication || "Не указан" },
-    ];
+    const mainInfoBook = MAIN_INFORMATION_BOOK(currentBook);
 
     return(
         <Box display="flex" flexDirection="row">
-            <Box sx={{display: "flex", flexDirection: "column", width: '50%', justifyContent: "center"}}>
+            <Box sx={{
+                display: "flex",
+                flexDirection: "column",
+                width: '50%',
+                justifyContent: "center" }}
+            >
                 <Box
                     component="img"
                     src={logo}
                     alt="Аватар"
-                    sx={{ width: '50%', }}
+                    sx={{ width: '50%' }}
                 />
-                <Rating name="overall-score" defaultValue={2.5} precision={0.5} readOnly />
-                <Typography></Typography>
+                <Rating name="overall-score" defaultValue={2.5} precision={0.5} readOnly /> {/*в данном случае цифры - просто заглушка*/}
             </Box>
             <Box>
-                <InformPanel data={mainInfo} />
+                <InformPanel data={mainInfoBook} />
             </Box>
         </Box>
     )
 }
+
 export default BookInfo;

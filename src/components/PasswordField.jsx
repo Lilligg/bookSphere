@@ -1,8 +1,9 @@
-import {IconButton, InputAdornment, TextField} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useState} from "react";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
-const PasswordField = ({label}) => {
+const PasswordField = (props) => {
+    const { label } = props;
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {

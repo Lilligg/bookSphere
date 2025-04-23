@@ -1,13 +1,11 @@
-import React from 'react';
-import { Box, Typography, TextField, MenuItem, Chip } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import SelectField from "./SelectField.jsx";
+import MultiSelect from "./MultiSelectField.jsx";
+import TextInputField from "./TextInputField.jsx";
 
-const FieldEditingForm = (
-    {
-    group,
-    formData,
-    handleChange,
-    handleMultiSelectChange
-    }) => {
+const FieldEditingForm = (props) => {
+    const  { group, formData, handleChange, handleMultiSelectChange } = props;
+
     return (
         <Box sx={{ mb: 4 }}>
             <Typography
@@ -24,87 +22,21 @@ const FieldEditingForm = (
             </Typography>
 
             {group.fields.map((field) => {
+
                 if (field.type === "select") {
                     return (
-                        <TextField
-                            key={field.name}
-                            select
-                            fullWidth
-                            margin="normal"
-                            label={field.label}
-                            name={field.name}
-                            value={formData[field.name]}
-                            onChange={handleChange}
-                            required={field.required}
-                        >
-                            {field.options.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                       <SelectField field={field} key={field.name} onChange={handleChange} value={formData[field.name]} />
                     );
                 }
 
                 if (field.type === "multiselect") {
                     return (
-                        <TextField
-                            key={field.name}
-                            select
-                            SelectProps={{
-                                multiple: true,
-                                value: formData[field.name],
-                                onChange: handleMultiSelectChange(field.name),
-                                renderValue: (selected) => (
-                                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-                                        {selected.map((value) => {
-                                            const option = field.options.find(opt => opt.value === value);
-                                            return (
-                                                <Chip
-                                                    key={value}
-                                                    label={option?.label || value}
-                                                    size="small"
-                                                />
-                                            );
-                                        })}
-                                    </Box>
-                                )
-                            }}
-                            label={field.label}
-                            fullWidth
-                            margin="normal"
-                        >
-                            {field.options.map((option) => (
-                                <MenuItem
-                                    key={option.value}
-                                    value={option.value}
-                                >
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </TextField>
+                        <MultiSelect field={field} onChange={handleMultiSelectChange} value={formData[field.name]}/>
                     );
                 }
 
                 return (
-                    <TextField
-                        key={field.name}
-                        fullWidth
-                        margin="normal"
-                        label={field.label}
-                        name={field.name}
-                        type={field.type}
-                        value={formData[field.name]}
-                        onChange={handleChange}
-                        required={field.required}
-                        multiline={field.type === "multiline"}
-                        rows={field.rows}
-                        placeholder={field.placeholder}
-                        inputProps={{
-                            autoComplete: "off",
-                            ...field.inputProps
-                        }}
-                    />
+                    <TextInputField field={field} onChange={handleChange} value={formData[field.name]} />
                 );
             })}
         </Box>
