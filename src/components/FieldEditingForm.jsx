@@ -4,7 +4,12 @@ import MultiSelect from "./MultiSelectField.jsx";
 import TextInputField from "./TextInputField.jsx";
 
 const FieldEditingForm = (props) => {
-    const  { group, formData, handleChange, handleMultiSelectChange } = props;
+    const  {
+        group,
+        formData,
+        handleChange,
+        handleMultiSelectChange
+    } = props;
 
     return (
         <Box sx={{ mb: 4 }}>
@@ -22,7 +27,6 @@ const FieldEditingForm = (props) => {
             </Typography>
 
             {group.fields.map((field) => {
-
                 if (field.type === "select") {
                     return (
                        <SelectField field={field} key={field.name} onChange={handleChange} value={formData[field.name]} />
@@ -31,7 +35,7 @@ const FieldEditingForm = (props) => {
 
                 if (field.type === "multiselect") {
                     return (
-                        <MultiSelect field={field} onChange={handleMultiSelectChange} value={formData[field.name]}/>
+                        <MultiSelect field={field} onChange={handleMultiSelectChange} value={formData[field.name]|| []}/>
                     );
                 }
 

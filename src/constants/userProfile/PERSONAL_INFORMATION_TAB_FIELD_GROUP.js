@@ -1,24 +1,22 @@
-export const PERSONAL_INFORMATION_TAB_FIELD_GROUP = (user = {}) => {
-    return [
+export const PERSONAL_INFORMATION_TAB_FIELD_GROUP = [
         {
             label: "Никнейм",
-            value: user.name || "Не указан"
+            value: "name"
         },
         {
             label: "Город",
-            value: user.city || "Не указан"
+            value: "city"
         },
         {
             label: "Дата рождения",
-            value: user.dateOfBirth || "Не указан"
+            value: "dateOfBirth"
         },
         {
             label: "Пол",
-            value: user.gender || "Не указан"
+            value: "gender"
         },
         {
             label: "О себе",
-            value: user.aboutYourself || "Не указан"
+            value: "aboutYourself"
         },
     ];
-};

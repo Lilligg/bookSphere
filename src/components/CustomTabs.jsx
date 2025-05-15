@@ -1,9 +1,8 @@
-import { Box } from "@mui/material";
-import TabList from "@mui/lab/TabList";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
 import { useState } from "react";
+import {TabList} from "@mui/lab";
 
 const CustomTabs = (props) => {
     const { data } = props;
@@ -15,8 +14,12 @@ const CustomTabs = (props) => {
 
     return (
         <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange}>
+
+                <TabList onChange={handleChange}
+                         indicatorColor="secondary"
+                         textColor="secondary"
+                         variant="fullWidth"
+                >
                     {data.map((tab) => (
                         <Tab
                             key={tab.value}
@@ -25,13 +28,13 @@ const CustomTabs = (props) => {
                         />
                     ))}
                 </TabList>
-            </Box>
 
             {data.map((tab) => (
-                <TabPanel key={tab.value} value={tab.value}>
+                <TabPanel key={tab.value} value={tab.value} sx = {{ padding: "30px",}} >
                     {tab.content}
                 </TabPanel>
             ))}
+
         </TabContext>
     )
 }

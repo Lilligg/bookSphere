@@ -18,15 +18,19 @@ interface IBook {
     genre?: string;
     yearPublication: string | null;
 
+    about?: string;
+    impressions?: string;
+
     personages: IPersonage[],
 
     quotes?: {
+       id: string;
        person?: string | null;
        text: string;
     }[] | null;
 
+    overallRating?: number;
     rating?: {
-        overall: number;
         styleMastery: number;
         characterDepth: number;
         plotConsistency: number;
@@ -72,9 +76,24 @@ const bookSlice = createSlice({
             state.error = action.payload;
         },
 
+        updateBook: (state, action: PayloadAction<IBook>) => {
+            const index = state.books.findIndex(book => book.id === action.payload.id);
+
+            if (index !== -1) {
+                // Обновляем книгу в массиве books
+                state.books[index] = action.payload;
+
+                // Если это текущая книга, обновляем и currentBook
+                if (state.currentBook?.id === action.payload.id) {
+                    state.currentBook = action.payload;
+                }
+            }
+        },
+
         setCurrentBookById: (state, action: PayloadAction<string>) => {
             state.currentBook = state.books.find(book => book.id === action.payload) || null;
         },
+
 
         addPersonage: (state, action: PayloadAction<{ bookId: string; personage: IPersonage }>) => {
             const book = state.books.find(b => b.id === action.payload.bookId);
@@ -118,5 +137,5 @@ const bookSlice = createSlice({
     },
 });
 
-export const { setBooks, addBook, removeBook, setLoading, setError, setCurrentBookById, addPersonage, updatePersonage, removePersonage} = bookSlice.actions;
+export const { setBooks, addBook, removeBook, setLoading, setError, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage} = bookSlice.actions;
 export default bookSlice.reducer;

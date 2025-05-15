@@ -29,5 +29,25 @@ export const EDITING_BOOK_FIELD_GROUP = [
                 required: true
             },
         ]
+    },
+    {
+        title: "О книге",
+        fields: [
+            {
+                label: "О книге",
+                name: "about",
+                type: "text",
+            }
+        ]
+    },
+    {
+        title: "Впечатления",
+        fields: [
+            {
+                label: "Впечатления",
+                name: "impressions",
+                type: "text",
+            }
+        ]
     }
 ]

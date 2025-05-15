@@ -1,7 +1,7 @@
 import { Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 
 const InformPanel = (props) => {
-const { data } = props;
+const { data, user } = props;
 
     return (
         <TableContainer sx={{ maxWidth: 650 }}>
@@ -17,7 +17,7 @@ const { data } = props;
                                 <Typography variant="body1">{item.label}</Typography>
                             </TableCell>
                             <TableCell>
-                                <Typography variant="body1">{item.value}</Typography>
+                                <Typography variant="body1">{user[item.value]}</Typography>
                             </TableCell>
                         </TableRow>
                     ))}

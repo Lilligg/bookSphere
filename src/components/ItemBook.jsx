@@ -1,44 +1,37 @@
-import { Button, Card, CardActions, CardContent, CardHeader, CardMedia, Typography } from "@mui/material";
-import imgBook from "../assets/assets.png";
+import { Card, CardHeader, CardMedia } from "@mui/material";
+import imgBook from "../assets/noBook.jpg";
 import { Link } from "react-router-dom";
 
 const ItemBook = (props) => {
     const { book } = props;
 
     return (
-        <Card sx={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column" }}
+        <Card
+            component={Link}
+            to={`/bookCard/${book.id}`}
+            sx={{
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                textDecoration: "none"
+            }}
         >
+            <CardMedia
+                component="img"
+                sx={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover',
+                    objectPosition: 'center'
+                }}
+                image={book.avatar || imgBook}
+                alt={book.title}
+            />
+
             <CardHeader
                 title={book.title || "Без названия"}
                 subheader={book.author || "Автор не указан"}
             />
-            <CardMedia
-                component="img"
-                height="200"
-                image={book.avatar || imgBook}
-                alt={book.title}
-                sx={{ objectFit: "contain", p: 1 }}
-            />
-            <CardContent sx={{ flexGrow: 1 }}>
-                <Typography variant="body2" color="text.secondary">
-                    Год: {book.yearPublication || "не указан"}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                    Жанр: {book.genre?.join(", ") || "не указан"}
-                </Typography>
-            </CardContent>
-            <CardActions>
-                <Button
-                    size="small"
-                    component={Link}
-                    to={`/bookCard/${book.id}`}
-                >
-                    Подробнее
-                </Button>
-            </CardActions>
         </Card>
     );
 };

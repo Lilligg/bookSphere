@@ -1,48 +1,80 @@
-import { Box } from "@mui/material";
-import { useEffect } from "react";
-import logo from "../../assets/assets.png";
+import { Avatar, Box, IconButton, Typography } from "@mui/material";
 import { Rating } from "@mui/lab";
-import InformPanel from "../InformPanel.jsx";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { setCurrentBookById } from "../../redux/book/bookSlice.js";
-import { MAIN_INFORMATION_BOOK } from "../../constants/bookCard/MAIN_INFORMATION_BOOK.js";
+import EditIcon from '@mui/icons-material/Edit';
+import { Link } from "react-router-dom";
+import imgBook from "../../assets/noBook.jpg";
 
-const BookInfo = () => {
-    const { id } = useParams();
-    const dispatch = useDispatch();
-    const currentBook = useSelector((state) => state.book.currentBook);
-
-    useEffect(() => {
-        if (id) {
-            dispatch(setCurrentBookById(id));
-        }
-    }, [id, dispatch]);
-
-    if (!currentBook) {
-        return <Box p={3}>Загрузка данных книги...</Box>;
-    }
-
-    const mainInfoBook = MAIN_INFORMATION_BOOK(currentBook);
+const BookInfo = (props) => {
+    const { currentBook } = props;
 
     return(
-        <Box display="flex" flexDirection="row">
-            <Box sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: '50%',
-                justifyContent: "center" }}
+        <Box display="flex"
+             flexDirection="row"
+             alignItems = "stretch"
+             justifyContent = "flex-start"
+             margin="10px"
+             position = "relative"
+        >
+            <Box
+                display= "flex"
+                flexDirection= "column"
+                justifyContent= "center"
             >
-                <Box
-                    component="img"
-                    src={logo}
-                    alt="Аватар"
-                    sx={{ width: '50%' }}
+                <Avatar
+                    src={currentBook.avatar || imgBook}
+                    sx={{
+                        width: 200,
+                        height: 200,
+                        border: '3px solid',
+                        borderColor: 'white'
+                    }}
                 />
-                <Rating name="overall-score" defaultValue={2.5} precision={0.5} readOnly /> {/*в данном случае цифры - просто заглушка*/}
             </Box>
-            <Box>
-                <InformPanel data={mainInfoBook} />
+
+            <Box marginLeft = "40px" marginRight = "30px">
+                <Typography variant="h2" color="white" marginBottom = "20px">{currentBook.title}</Typography>
+                <Typography variant="h4" color="white">{currentBook.author + ", " + currentBook.yearPublication + "г."}</Typography>
+                <Typography variant="body1" color="white">{currentBook.genre}</Typography>
+            </Box>
+
+            <Box position = "absolute" top="0px" right="0px">
+                <IconButton
+                    component={Link}
+                    to={`/EditingBooks/${currentBook.id}`}
+                    sx={{color: 'white'}}
+                >
+                    <EditIcon/>
+                </IconButton>
+            </Box>
+
+            <Box position = "absolute" bottom="0px"  right="0px">
+                <Typography color="white">Общий рейтинг</Typography>
+                <Box display="flex" flexDirection="row" >
+                    <Rating
+                        name="overall-score"
+                        defaultValue={currentBook.overallRating}
+                        precision={0.1}
+                        readOnly
+                        aria-orientation="vertical"
+                        sx={{
+                            '& .MuiRating-icon': {
+                                color: '#debf76', // цвет заполненных звезд
+                            },
+                            '& .MuiRating-iconEmpty': {
+                                color: '#d8d8d8', // цвет пустых звезд
+                            }
+                        }}
+                    />
+                    <Typography
+                        color="white"
+                        sx={{
+                            marginLeft:"5px",
+                            whiteSpace: "nowrap"
+                        }}
+                    >
+                        {currentBook.overallRating.toFixed(1)} / 5
+                    </Typography>
+                </Box>
             </Box>
         </Box>
     )

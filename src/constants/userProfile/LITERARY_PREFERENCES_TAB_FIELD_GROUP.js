@@ -1,48 +1,46 @@
-export const LITERARY_PREFERENCES_TAB_FIELD_GROUP = (user = {}) => {
-    return [
+export const LITERARY_PREFERENCES_TAB_FIELD_GROUP = [
         {
             label: "Любимые жанры",
-            value: user.favoriteGenres || "Не указан"
+            value: "favoriteGenres"
         },
         {
             label: "Нелюбимые жанры",
-            value: user.unlovedGenres || "Не указан"
+            value: "unlovedGenres"
         },
         {
             label: "Любимые авторы",
-            value: user.favoriteAuthors || "Не указан"
+            value: "favoriteAuthors"
         },
         {
             label: "Самая перечитываемая книга",
-            value: user.favoriteRereadBook || "Не указан"
+            value: "favoriteRereadBook"
         },
         {
             label: "Книга, которая разочаровала",
-            value: user.disappointingBook || "Не указан"
+            value: "disappointingBook"
         },
         {
             label: "Формат чтения",
-            value: user.readingFormat || "Не указан"
+            value: "readingFormat"
         },
         {
             label: "Любимая книжная серия",
-            value: user.favoriteBookSeries || "Не указан"
+            value: "favoriteBookSeries"
         },
         {
             label: "Языки чтения",
-            value: user.readingLanguage || "Не указан"
+            value: "readingLanguage"
         },
         {
             label: "Скорость чтения",
-            value: user.readingSpeed || "Не указан"
+            value: "readingSpeed"
         },
         {
             label: "Любимое время чтения",
-            value: user.readingTime || "Не указан"
+            value: "readingTime"
         },
         {
             label: "Любимое место для чтения",
-            value: user.favoriteReadingPlaces || "Не указан"
+            value: "favoriteReadingPlaces"
         }
     ];
-};

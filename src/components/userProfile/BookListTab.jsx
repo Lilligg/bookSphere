@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import logo from "../../assets/assets.png";
 
 {/*пока весь компонент не рабочий и просто есть*/}
 const BookListTab = () => {

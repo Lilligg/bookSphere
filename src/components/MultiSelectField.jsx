@@ -1,7 +1,7 @@
 import { Box, Chip, MenuItem, TextField } from "@mui/material";
 
 const MultiSelect = (props) => {
-    const { field, value, onChange } = props;
+    const { field, value = [], onChange } = props;
 
     return (
         <TextField
@@ -10,11 +10,14 @@ const MultiSelect = (props) => {
             SelectProps={{
                 multiple: true,
                 value: value,
-                onChange: onChange,
+                onChange: (e) => {
+                    onChange(field.name)(e);
+                },
                 renderValue: (selected) => (
                     <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
                         {selected.map((value) => {
                             const option = field.options.find(opt => opt.value === value);
+
                             return (
                                 <Chip
                                     key={value}

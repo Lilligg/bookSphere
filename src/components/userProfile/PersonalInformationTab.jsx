@@ -10,11 +10,9 @@ const PersonalInformationTab = () => {
         return <Box>Загрузка данных...</Box>;
     }
 
-    const PersonalInformation = PERSONAL_INFORMATION_TAB_FIELD_GROUP(user)
-
     return (
         <Box>
-            <InformPanel data={PersonalInformation} />
+            <InformPanel data={PERSONAL_INFORMATION_TAB_FIELD_GROUP} user={user} />
         </Box>
     );
 }

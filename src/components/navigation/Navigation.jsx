@@ -1,20 +1,16 @@
-import { useState } from 'react';
 import {
     AppBar,
     Box, Button,
     Toolbar,
     Typography
 } from "@mui/material";
-import logo from "./../../assets/assets.png"
+import logo from "./../../assets/logo.png"
 import { Link } from "react-router-dom"
 import UserMenu from "./UserMenu.jsx";
+import {useSelector} from "react-redux";
 
 const Navigation = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    const handleLogOut = () => {
-        setIsLoggedIn(!isLoggedIn);
-    }
+    const { isAuth  } = useSelector((state) => state.user);
 
     const renderAuthButtons = () => (
         <>
@@ -24,8 +20,12 @@ const Navigation = () => {
     );
 
     return (
-        <AppBar position="static" >
-            <Toolbar sx={{ maxWidth: 1200, width: '100%', margin: '0 auto' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#262526' }}>
+            <Toolbar sx={{
+                maxWidth: 1200,
+                width: '100%',
+                margin: '0 auto'
+            }}>
                 <Box
                     component="img"
                     src={logo}
@@ -35,9 +35,9 @@ const Navigation = () => {
                 <Typography variant="h5">
                     BookSphere
                 </Typography>
-                <Button onClick={handleLogOut} style={{ color: 'white' }}>Переключение авторизации</Button>
+
                 <Box sx={{ ml: 'auto', display: 'flex', gap: 2 }}>
-                    {isLoggedIn ? <UserMenu/> : renderAuthButtons()}
+                    {isAuth ? <UserMenu/> : renderAuthButtons()}
                 </Box>
             </Toolbar>
         </AppBar>

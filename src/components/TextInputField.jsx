@@ -17,6 +17,9 @@ const TextInputField = (props) => {
             multiline={field.type === "multiline"}
             rows={field.rows}
             placeholder={field.placeholder}
+            InputLabelProps={{
+                shrink: true,
+            }}
             inputProps={{
                 autoComplete: "off",
                 ...field.inputProps

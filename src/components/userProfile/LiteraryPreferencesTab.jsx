@@ -12,11 +12,10 @@ const LiteraryPreferencesTab = () => {
         return <Box>Загрузка данных...</Box>;
     }
 
-    const literaryPreferences = LITERARY_PREFERENCES_TAB_FIELD_GROUP(user)
 
     return (
         <Box>
-            <InformPanel data={literaryPreferences} />
+            <InformPanel data={LITERARY_PREFERENCES_TAB_FIELD_GROUP} user={user} />
         </Box>
     )
 }

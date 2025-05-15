@@ -1,12 +1,15 @@
 import { useState } from "react";
-import { Avatar, Box, Button, Menu, MenuItem } from "@mui/material";
-import avatar from "./../../assets/assets.png"
+import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { USER_MENU } from "../../constants/navigation/USER_MENU.js";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/user/userSlice.js";
 
 const UserMenu = () => {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const { user } = useSelector((state) => state.user);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -15,6 +18,10 @@ const UserMenu = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const logoutClick = () =>{
+        dispatch(logout())
+    }
 
     return (
         <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -27,8 +34,9 @@ const UserMenu = () => {
             >
                 <Avatar
                     alt="Аватар пользователя"
-                    src={avatar}
+                    src={user.avatar}
                 />
+                <Typography variant="body1" color = "white" margin="10px">{user.name}</Typography>
             </Button>
 
             <Menu
@@ -47,7 +55,7 @@ const UserMenu = () => {
                         {item.label}
                     </MenuItem>))
                 }
-                <MenuItem onClick={handleClose}>Выйти</MenuItem>
+                <MenuItem onClick={logoutClick}>Выйти</MenuItem>
             </Menu>
         </Box>
     );

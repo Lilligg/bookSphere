@@ -1,34 +1,31 @@
-import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
-import { v4 as uuidv4 } from 'uuid';
-import { PERSONAGE_FORM_FIELD_GROUP } from "../constants/PERSONAGE_FORM_FIELD_GROUP.js";
-import FieldEditingForm from "./FieldEditingForm.jsx";
+import {Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack} from "@mui/material";
+import {PERSONAGE_FORM_FIELD_GROUP} from "../../constants/PERSONAGE_FORM_FIELD_GROUP.js";
+import FieldEditingForm from "../FieldEditingForm.jsx";
+import {useState} from "react";
+import {QUOTE_FORM_FIELD_GROUP} from "../../constants/QUOTE_FORM_FIELD_GROUP.js";
+import {v4 as uuidv4} from "uuid";
 
-const AddPersonageForm = (props) => {
+const AddQuoteForm = (props) => {
     const { setFormData, open, onClose } = props;
-    const [personage, setPersonage] = useState({
-        name: '',
-        avatar: '',
-        characterStatus: '',
-        appearance: '',
-        character: '',
-        description: ''
-    });
+    const [quotes, setQuotes] = useState({
+        person: "",
+        text: "",
+    })
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setPersonage(prev => ({ ...prev, [name]: value }));
+        setQuotes(prev => ({ ...prev, [name]: value }));
     };
 
     const handleSubmit = () => {
-        const newPersonage = {
-            ...personage,
+        const newQuotes = {
+            ...quotes,
             id: uuidv4()
         };
 
         onClose();
 
-        setPersonage({
+        setQuotes({
             name: '',
             avatar: '',
             characterStatus: '',
@@ -39,7 +36,7 @@ const AddPersonageForm = (props) => {
 
         setFormData(prev => ({
             ...prev,
-            personages: [...prev.personages, newPersonage]
+            quotes: [...prev.quotes, newQuotes]
         }));
     };
 
@@ -50,14 +47,14 @@ const AddPersonageForm = (props) => {
             maxWidth="sm"
             fullWidth
         >
-            <DialogTitle>Добавить нового персонажа</DialogTitle>
+            <DialogTitle>Добавить новую цитату</DialogTitle>
             <DialogContent>
                 <Stack spacing={2} sx={{ mt: 2 }}>
-                    {PERSONAGE_FORM_FIELD_GROUP.map((group, index) => (
+                    {QUOTE_FORM_FIELD_GROUP.map((group, index) => (
                         <FieldEditingForm
                             key={index}
                             group={group}
-                            formData={personage}
+                            formData={quotes}
                             handleChange={handleChange}
                         />
                     ))}
@@ -70,7 +67,7 @@ const AddPersonageForm = (props) => {
                 </Button>
             </DialogActions>
         </Dialog>
-    );
-};
+    )
+}
 
-export default AddPersonageForm;
+export default AddQuoteForm;

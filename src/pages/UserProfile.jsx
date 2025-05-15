@@ -5,9 +5,9 @@ import RightProfile from "../components/userProfile/RightProfile.jsx";
 const UserProfile = () => {
 
     return (
-        <Box display="flex">
-           <LeftProfileTab/>
-           <RightProfile/>
+        <Box display="flex" flexDirection= "column">
+            <RightProfile/>
+            <LeftProfileTab/>
         </Box>
     )
 }
