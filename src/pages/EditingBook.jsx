@@ -83,6 +83,13 @@ const EditingBook = () => {
         }));
     };
 
+    const avatarSubmit = (avatar) => {
+        setFormData(prev => ({
+            ...prev,
+            avatar: avatar,
+        }))
+    }
+
     const handleSubmit = () => {
         if (id) {
             const newBook = {
@@ -205,9 +212,9 @@ const EditingBook = () => {
                 </Box>
 
                 <AddAvatar
-                    formData ={formData}
-                    setFormData={setFormData}
                     title = "Обложка книги"
+                    type = {id? "typeBook" : "typeNewBook"}
+                    onAvatarChange = {avatarSubmit}
                 />
             </Box>
 

@@ -1,7 +1,41 @@
 import {Avatar, Box, Button, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import {setCurrentBookById, updateBookAvatar} from "../redux/book/bookSlice.js";
+import {useParams} from "react-router-dom";
+import {updateUserAvatar} from "../redux/user/userSlice.js";
 
 const AddAvatar = (props) => {
-    const {formData, setFormData, title} = props;
+    const { title, type, propAvatar, onAvatarChange } = props;
+
+    const [avatar, setAvatar] = useState(null);
+
+    const dispatch = useDispatch();
+    const { id } = useParams();
+    const { currentBook } = useSelector((state) => state.book);
+    const { user } = useSelector((state) => state.user);
+
+    let currentAvatar;
+    if (type === "typeUser") {
+        currentAvatar = user?.avatar;
+    }
+    else if (type === "typeBook") {
+        currentAvatar = currentBook?.avatar;
+    }
+    else if (type === "typeNewBook") {
+        currentAvatar = avatar;
+    }
+    else if (type === "typePersonBook") {
+        currentAvatar = propAvatar;
+    }
+
+    const hasAvatar = !!currentAvatar;
+
+    useEffect(() => {
+        if (id && type === "typeBook") {
+            dispatch(setCurrentBookById(id));
+        }
+    }, [id, type, dispatch]);
 
     const handleAvatarChange = (e) => {
         const file = e.target.files[0];
@@ -20,22 +54,47 @@ const AddAvatar = (props) => {
 
         const reader = new FileReader();
         reader.onloadend = () => {
-            setFormData(prev => ({
-                ...prev,
-                avatar: reader.result,
-            }));
-            console.log(reader.result);
+            const avatar = reader.result;
+            if (type === "typeUser") {
+                dispatch(updateUserAvatar(avatar))
+            }
+            else if (type === "typeBook") {
+                dispatch(updateBookAvatar({
+                    id: currentBook.id,
+                    avatar: avatar
+                }))
+            }
+            else if (type === "typeNewBook") {
+                setAvatar(avatar)
+                if (onAvatarChange) {
+                    onAvatarChange(avatar);
+                }
+            }
+            else if (type === "typePersonBook") {
+                setAvatar(avatar)
+                onAvatarChange(avatar);
+            }
         };
 
         reader.readAsDataURL(file);
-        console.log(formData);
     };
 
     const handleRemoveAvatar = () => {
-        setFormData(prev => ({
-            ...prev,
-            avatar: null,
-        }));
+        if (type === "typeUser") {
+            dispatch(updateUserAvatar(null))
+        }
+        else if (type === "typeBook") {
+            dispatch(updateBookAvatar({
+                id: currentBook.id,
+                avatar: null
+            }));
+        }
+        else if (type === "typeNewBook" || type === "typePersonBook") {
+            setAvatar(null)
+            if (onAvatarChange) {
+                onAvatarChange(null);
+            }
+        }
     }
 
     return (
@@ -49,7 +108,7 @@ const AddAvatar = (props) => {
         }}>
             <Typography variant="h6">{title}</Typography>
             <Avatar
-                src={formData.avatar}
+                src={currentAvatar}
                 sx={{
                     width: 150,
                     height: 150,
@@ -63,7 +122,7 @@ const AddAvatar = (props) => {
                         component="span"
                         variant="contained"
                     >
-                        {formData.avatar ? 'Изменить' : 'Загрузить'}
+                        {hasAvatar ? 'Изменить' : 'Загрузить'}
                         <input
                             id="avatar-upload"
                             type="file"
@@ -73,7 +132,7 @@ const AddAvatar = (props) => {
                         />
                     </Button>
                 </label>
-                {formData.avatar && (
+                {hasAvatar && (
                     <Button
                         variant="outlined"
                         color="error"

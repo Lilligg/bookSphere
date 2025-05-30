@@ -63,37 +63,56 @@ const bookSlice = createSlice({
         setBooks: (state, action: PayloadAction<IBook[]>) => {
             state.books = action.payload;
         },
+
         addBook: (state, action: PayloadAction<IBook>) => {
             state.books.push(action.payload);
         },
+
         removeBook: (state, action: PayloadAction<string>) => {
             state.books = state.books.filter(book => book.id !== action.payload);
         },
+
         setLoading: (state, action) => {
             state.isLoading = action.payload;
         },
+
         setError: (state, action) => {
             state.error = action.payload;
-        },
-
-        updateBook: (state, action: PayloadAction<IBook>) => {
-            const index = state.books.findIndex(book => book.id === action.payload.id);
-
-            if (index !== -1) {
-                // Обновляем книгу в массиве books
-                state.books[index] = action.payload;
-
-                // Если это текущая книга, обновляем и currentBook
-                if (state.currentBook?.id === action.payload.id) {
-                    state.currentBook = action.payload;
-                }
-            }
         },
 
         setCurrentBookById: (state, action: PayloadAction<string>) => {
             state.currentBook = state.books.find(book => book.id === action.payload) || null;
         },
 
+        updateBook: (state, action: PayloadAction<Partial<IBook> & { id: string }>) => {
+            const index = state.books.findIndex(book => book.id === action.payload.id);
+
+            if (index !== -1) {
+                state.books[index] = {
+                    ...state.books[index],
+                    ...action.payload
+                };
+
+                if (state.currentBook?.id === action.payload.id) {
+                    state.currentBook = {
+                        ...state.currentBook,
+                        ...action.payload
+                    };
+                }
+            }
+        },
+
+        updateBookAvatar: (state, action: PayloadAction<{id: string; avatar: string | null}>) => {
+            const index = state.books.findIndex(book => book.id === action.payload.id);
+
+            if (index !== -1) {
+                state.books[index].avatar = action.payload.avatar;
+
+                if (state.currentBook?.id === action.payload.id) {
+                    state.currentBook.avatar = action.payload.avatar;
+                }
+            }
+        },
 
         addPersonage: (state, action: PayloadAction<{ bookId: string; personage: IPersonage }>) => {
             const book = state.books.find(b => b.id === action.payload.bookId);
@@ -137,5 +156,5 @@ const bookSlice = createSlice({
     },
 });
 
-export const { setBooks, addBook, removeBook, setLoading, setError, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage} = bookSlice.actions;
+export const { setBooks, addBook, updateBookAvatar, removeBook, setLoading, setError, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage} = bookSlice.actions;
 export default bookSlice.reducer;

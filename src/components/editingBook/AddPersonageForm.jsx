@@ -24,6 +24,13 @@ const AddPersonageForm = (props) => {
         setPersonage(prev => ({ ...prev, [name]: value }));
     };
 
+    const avatarChange = (avatar) => {
+        setPersonage(prev => ({
+            ...prev,
+            avatar: avatar,
+        }))
+    }
+
     const handleSubmit = () => {
         const newPersonage = {
             ...personage,
@@ -49,9 +56,10 @@ const AddPersonageForm = (props) => {
             <DialogTitle>Добавить нового персонажа</DialogTitle>
             <DialogContent>
                 <AddAvatar
-                    formData={personage}
-                    setFormData={setPersonage}
                     title="Загрузите фото персонажа"
+                    type="typePersonBook"
+                    onAvatarChange={avatarChange}
+                    propAvatar={personage.avatar}
                 />
                 <Stack spacing={2} sx={{ mt: 2 }}>
                     {PERSONAGE_FORM_FIELD_GROUP.map((group, index) => (

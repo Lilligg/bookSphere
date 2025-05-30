@@ -24,7 +24,7 @@ const BookCard = () => {
     return (
         <Box padding="25px">
             <BookInfo currentBook={currentBook}/>
-            <Box backgroundColor = '#D4D4D4' sx={{opacity:"0.97"}}>
+            <Box backgroundColor = '#D4D4D4' sx={{opacity:"0.97", marginTop: "50px"}}>
                 <TabBook currentBook={currentBook}/>
             </Box>
         </Box>

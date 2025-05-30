@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography, Box, Grid } from '@mui/material';
 
 const QuoteCard = (props) => {
-    const {quotes} = props;
+    const { quotes } = props;
 
     return (
         <Box>

@@ -5,7 +5,7 @@ interface IUser {
     name: string;
     password: string;
 
-    avatar: string;
+    avatar: string | null;
     dateOfBirth: string;
     gender: string;
     city: string;
@@ -40,7 +40,20 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         updateUser: (state, action) => {
-            state.user = action.payload;
+            if (state.user) {
+                state.user = {
+                    ...state.user,
+                    ...action.payload
+                };
+            } else {
+                state.user = action.payload;
+            }
+        },
+
+        updateUserAvatar: (state, action) => {
+            if (state.user) {
+                state.user.avatar = action.payload;
+            }
         },
 
         registration: (state, action) => {
@@ -55,5 +68,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { updateUser, logout, registration} = userSlice.actions;
+export const { updateUser, updateUserAvatar, logout, registration} = userSlice.actions;
 export default userSlice.reducer;

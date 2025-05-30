@@ -82,9 +82,8 @@ const EditingProfile = () => {
 
             </Box>
             <AddAvatar
-                formData={formData}
-                setFormData={setFormData}
                 title = "Аватар Пользователя"
+                type = "typeUser"
             />
         </Box>
 

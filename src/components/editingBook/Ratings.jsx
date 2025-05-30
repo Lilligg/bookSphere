@@ -3,7 +3,7 @@ import { Rating } from "@mui/lab";
 import { RATING_TABS } from "../../constants/bookCard/RATING_TABS.js";
 
 const Ratings = (props) => {
-    const {formData, setFormData} = props;
+    const { formData, setFormData } = props;
 
     const handleChange = (name, value) => {
         const updatedRating = {
