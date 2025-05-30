@@ -1,69 +1,71 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import React, {useState } from "react";
-import { genreOptions } from "../constants/fieldOptions";
+import {Box, Button, Grid, Typography} from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
 import FieldEditingForm from "../components/FieldEditingForm";
-import { addBook } from "../redux/book/bookSlice";
-import AddPersonageForm from "../components/AddPersonageForm";
-import PersonageCard from "../components/PersonageCard";
+import {addBook, setCurrentBookById, updateBook} from "../redux/book/bookSlice";
+import AddPersonageForm from "../components/editingBook/AddPersonageForm.jsx";
+import PersonageCard from "../components/editingBook/PersonageCard.jsx";
 import { v4 as uuidv4 } from 'uuid';
+import { EDITING_BOOK_FIELD_GROUP } from "../constants/EDITING_BOOK_FIELD_GROUP.js";
+import Ratings from "../components/editingBook/Ratings.jsx";
+import AddQuoteForm from "../components/editingBook/AddQuoteForm.jsx";
+import QuoteCard from "../components/editingBook/QuoteCard.jsx";
+import AddAvatar from "../components/AddAvatar.jsx";
+import { useNavigate, useParams } from "react-router-dom";
+
+const INITIAL_FORM_BOOK = {
+    id: "",
+    title: "",
+    author: "",
+    avatar: null,
+    genre: [],
+    yearPublication: "",
+    about: "",
+    impressions: "",
+    personages: [],
+    quotes: [],
+    overallRating: 0,
+    rating: {
+        styleMastery: 0,
+        characterDepth: 0,
+        plotConsistency: 0,
+        worldBuildingScore: 0,
+        thematicWeight: 0,
+        emotionalImpact: 0,
+        readingDifficulty: 0,
+        rereadValue: 0,
+    }
+}
 
 const EditingBook = () => {
     const dispatch = useDispatch();
-    const [isAddPersonageOpen, setIsAddPersonageOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        id: "",
-        title: "",
-        author: "",
-        avatar: "",
-        genre: [],
-        yearPublication: "",
-        personages: [],
-        quotes: [],
-        rating: {
-            overall: 0,
-            styleMastery: 0,
-            characterDepth: 0,
-            plotConsistency: 0,
-            worldBuildingScore: 0,
-            thematicWeight: 0,
-            emotionalImpact: 0,
-            readingDifficulty: 0,
-            rereadValue: 0,
-        },
-    });
+    const navigate = useNavigate();
+    const { id } = useParams();
+    const { currentBook } = useSelector((state) => state.book);
 
-    const fieldGroups = [
-        {
-            title: "Основная информация",
-            fields: [
-                {
-                    label: "Название",
-                    name: "title",
-                    type: "text",
-                    required: true
-                },
-                {
-                    label: "Автор",
-                    name: "author",
-                    type: "text",
-                    required: true
-                },
-                {
-                    label: "Жанр",
-                    name: "genre",
-                    type: "multiselect",
-                    options: genreOptions
-                },
-                {
-                    label: "Год публикации",
-                    name: "yearPublication",
-                    type: "text",
-                    required: true
-                },
-            ]
+    const [isAddPersonageOpen, setIsAddPersonageOpen] = useState(false);
+    const [isAddQuoteOpen, setIsAddQuoteOpen] = useState(false);
+    const [formData, setFormData] = useState(INITIAL_FORM_BOOK);
+
+    useEffect(() => {
+        if (id) {
+            dispatch(setCurrentBookById(id));
         }
-    ];
+        else {
+            setFormData({
+                ...INITIAL_FORM_BOOK,
+            });
+        }
+    }, [id, dispatch]);
+
+    useEffect(() => {
+        if(!id) return;
+
+        setFormData({
+            ...INITIAL_FORM_BOOK,
+            ...currentBook
+        });
+    }, [currentBook, id]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -81,96 +83,148 @@ const EditingBook = () => {
         }));
     };
 
-    const handleAddPersonage = (newPersonage) => {
-        const personageWithId = {
-            ...newPersonage,
-            id: uuidv4(),
-        };
-
+    const avatarSubmit = (avatar) => {
         setFormData(prev => ({
             ...prev,
-            personages: [...prev.personages, personageWithId],
-        }));
-        setIsAddPersonageOpen(false);
-    };
-
-    const handleRemovePersonage = (personageId) => {
-        setFormData(prev => ({
-            ...prev,
-            personages: prev.personages.filter(p => p.id !== personageId),
-        }));
-    };
+            avatar: avatar,
+        }))
+    }
 
     const handleSubmit = () => {
-        const newBook = {
-            ...formData,
-            id: uuidv4(),
-        };
+        if (id) {
+            const newBook = {
+                ...formData
+            }
 
-        dispatch(addBook(newBook));
+            dispatch(updateBook(newBook))
+            navigate(`/bookCard/${id}`);
+        }
+
+        if (!id) {
+            const newBook = {
+                ...formData,
+                id: uuidv4(),
+            };
+
+            dispatch(addBook(newBook));
+            navigate(`/bookCard/${newBook.id}`)
+        }
     };
 
     return (
-        <Box>
+        <Box backgroundColor = '#F8F4E3' padding="25px">
             <Typography variant="h5" gutterBottom>
-                Добавление новой книги
+                {id? "Изменение данных книги: " + [currentBook.title] :
+                    "Добавление новой книги"
+                }
             </Typography>
 
-            {fieldGroups.map((group, index) => (
-                <FieldEditingForm
-                    key={index}
-                    group={group}
-                    formData={formData}
-                    handleChange={handleChange}
-                    handleMultiSelectChange={handleMultiSelectChange}
-                />
-            ))}
+            <Box display="flex" flexDirection="row">
+                <Box width="70%">
+                    {EDITING_BOOK_FIELD_GROUP.map((group, index) => (
+                        <FieldEditingForm
+                            key={index}
+                            group={group}
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleMultiSelectChange={handleMultiSelectChange}
+                        />
+                    ))}
 
-            <Box mt={4}>
-                <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-                    <Typography variant="h6">
-                        Персонажи ({formData.personages.length})
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        onClick={() => setIsAddPersonageOpen(true)}
-                    >
-                        Добавить персонажа
-                    </Button>
+                    <Ratings setFormData={setFormData} formData={formData} />
+
+                    <Box mt={4}>
+                        <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={2}
+                        >
+                            <Typography variant="h6">
+                                Персонажи ({formData.personages.length})
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                onClick={() => setIsAddPersonageOpen(true)}
+                            >
+                                Добавить персонажа
+                            </Button>
+                        </Box>
+
+                        {formData.personages.length > 0 ? (
+                            <Grid container spacing={2}>
+                                {formData.personages.map((personage) => (
+                                    <Grid item xs={12} sm={6} md={4} key={personage.id}>
+                                        <PersonageCard
+                                            personage={personage}
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        ) : (
+                            <Typography variant="body2" color="text.secondary">
+                                Добавьте персонажей книги
+                            </Typography>
+                        )}
+                    </Box>
+
+                    <Box mt={4}>
+                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                            <Typography variant="h6">
+                                Цитаты ({formData.quotes.length})
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                onClick={() => setIsAddQuoteOpen(true)}
+                            >
+                                Добавить цитату
+                            </Button>
+                        </Box>
+
+                        {formData.quotes.length > 0 ? (
+                            <Grid container spacing={2}>
+                                {formData.quotes.map((quotes) => (
+                                    <Grid item xs={12} sm={6} md={4} key={quotes.id}>
+                                        <QuoteCard
+                                            quotes={quotes}
+                                        />
+                                    </Grid>
+                                ))}
+                            </Grid>
+                        ) : (
+                            <Typography variant="body2" color="text.secondary">
+                                Добавьте цитаты книги
+                            </Typography>
+                        )}
+                    </Box>
+
+                    <AddPersonageForm
+                        open={isAddPersonageOpen}
+                        onClose={() => setIsAddPersonageOpen(false)}
+                        setFormData={setFormData}
+                    />
+
+                    <AddQuoteForm
+                    open={isAddQuoteOpen}
+                    onClose={() => setIsAddQuoteOpen(false)}
+                    setFormData={setFormData}
+                    />
                 </Box>
 
-                {formData.personages.length > 0 ? (
-                    <Grid container spacing={2}>
-                        {formData.personages.map((personage) => (
-                            <Grid item xs={12} sm={6} md={4} key={personage.id}>
-                                <PersonageCard
-                                    personage={personage}
-                                    onDelete={() => handleRemovePersonage(personage.id)}
-                                />
-                            </Grid>
-                        ))}
-                    </Grid>
-                ) : (
-                    <Typography variant="body2" color="text.secondary">
-                        Добавьте персонажей книги
-                    </Typography>
-                )}
+                <AddAvatar
+                    title = "Обложка книги"
+                    type = {id? "typeBook" : "typeNewBook"}
+                    onAvatarChange = {avatarSubmit}
+                />
             </Box>
 
-            <AddPersonageForm
-                open={isAddPersonageOpen}
-                onClose={() => setIsAddPersonageOpen(false)}
-                onSave={handleAddPersonage}
-            />
-
             <Button
-                type="button"
                 variant="contained"
                 sx={{ mt: 3 }}
                 fullWidth
                 onClick={handleSubmit}
             >
-                Сохранить изменения
+                {id? "Сохранить изменения" : "Добавить книгу"}
             </Button>
         </Box>
     );

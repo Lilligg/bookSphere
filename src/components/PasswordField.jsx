@@ -1,8 +1,15 @@
-import {IconButton, InputAdornment, TextField} from "@mui/material";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
-import {useState} from "react";
+import { IconButton, InputAdornment, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useState } from "react";
 
-const PasswordField = ({label}) => {
+const PasswordField = (props) => {
+    const {
+        label,
+        value,
+        name,
+        onChange
+    } = props;
+
     const [showPassword, setShowPassword] = useState(false);
 
     const handleClickShowPassword = () => {
@@ -13,7 +20,10 @@ const PasswordField = ({label}) => {
         <TextField
             id="outlined-basic"
             type={showPassword ? 'text' : 'password'}
+            name={name}
             label={label}
+            value={value}
+            onChange={onChange}
             variant="outlined"
             sx={{ marginTop: 2 }}
             InputProps={{

@@ -1,35 +1,25 @@
-import {Box} from "@mui/material";
-import TabList from "@mui/lab/TabList";
-import Tab from "@mui/material/Tab";
-import TabPanel from "@mui/lab/TabPanel";
-import PersonalInformationTab from "../userProfile/PersonalInformationTab.jsx";
-import TabContext from "@mui/lab/TabContext";
-import React from "react";
+import { BOOK_TABS } from "../../constants/bookCard/BOOK_TABS.jsx";
+import CustomTabs from "../CustomTabs.jsx";
+import { Box, Typography } from "@mui/material";
 
-const TabBook = () => {
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
+const TabBook = (props) => {
+    const { currentBook } = props;
 
     return (
-        <TabContext value={value}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="О книге" value="1" />
-                    <Tab label="Персонажи" value="2" />
-                    <Tab label="Цитаты" value="3" />
-                    <Tab label="Впечатления" value="4" />
-                    <Tab label="Оценка" value="5" />
-                </TabList>
+        <Box
+            marginTop = "30px"
+            display="flex"
+            flexDirection="row"
+        >
+            <Box width="60%">
+                <CustomTabs data = {BOOK_TABS(currentBook) }/>
             </Box>
-            <TabPanel value="1">аааа</TabPanel>
-            <TabPanel value="2">Item Two</TabPanel>
-            <TabPanel value="3">Item Three</TabPanel>
-            <TabPanel value="4">ддд</TabPanel>
-            <TabPanel value="5">Item Two</TabPanel>
-        </TabContext>
+            <Box width="40%" marginTop="20px">
+                <Typography variant="body1" align="center">
+                    Тут будет статистика по книге
+                </Typography>
+            </Box>
+        </Box>
     )
 }
 

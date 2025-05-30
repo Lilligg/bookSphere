@@ -1,12 +1,15 @@
-import {Avatar, Box, Button, Menu, MenuItem} from "@mui/material";
-import avatar from "./../../assets/assets.png"
-import {useState} from "react";
-import {Link} from "react-router-dom";
-
+import { useState } from "react";
+import { Avatar, Box, Button, Menu, MenuItem, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import { USER_MENU } from "../../constants/navigation/USER_MENU.js";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/user/userSlice.js";
 
 const UserMenu = () => {
+    const dispatch = useDispatch();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const { user } = useSelector((state) => state.user);
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -15,6 +18,10 @@ const UserMenu = () => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const logoutClick = () =>{
+        dispatch(logout())
+    }
 
     return (
         <Box style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -27,8 +34,9 @@ const UserMenu = () => {
             >
                 <Avatar
                     alt="Аватар пользователя"
-                    src={avatar}
+                    src={user.avatar}
                 />
+                <Typography variant="body1" color = "white" margin="10px">{user.name}</Typography>
             </Button>
 
             <Menu
@@ -38,39 +46,16 @@ const UserMenu = () => {
                 open={open}
                 onClose={handleClose}
             >
-                <MenuItem
-                    component={Link}
-                    to="/UserProfile"
-                    onClick={handleClose}
-                >
-                    Профиль
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/EditingProfile"
-                    onClick={handleClose}
-                >
-                    Настройки профиля
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/ListBooks"
-                    onClick={handleClose}
-                >
-                    Мои книги
-                </MenuItem>
-
-                <MenuItem
-                    component={Link}
-                    to="/EditingBook"
-                    onClick={handleClose}
-                >
-                    Добавить книгу
-                </MenuItem>
-
-                <MenuItem onClick={handleClose}>Выйти</MenuItem>
+                {USER_MENU.map((item) => (
+                    <MenuItem
+                        component={Link}
+                        to={item.link}
+                        onClick={handleClose}
+                    >
+                        {item.label}
+                    </MenuItem>))
+                }
+                <MenuItem onClick={logoutClick}>Выйти</MenuItem>
             </Menu>
         </Box>
     );

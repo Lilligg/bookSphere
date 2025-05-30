@@ -1,14 +1,18 @@
-import {Box, Typography} from "@mui/material";
-import React from "react";
-import logo from "../../assets/assets.png";
+import { Box, Typography } from "@mui/material";
 
+{/*пока весь компонент не рабочий и просто есть*/}
 const BookListTab = () => {
     const data = [];
 
     return (
         <>
             {data.map(([name, author], index) => (
-                <Box key={index} display="flex" flexDirection="row" justifyContent="flex-start" sx={{ width: '90%'}}>
+                <Box
+                    key={index}
+                    display="flex"
+                    flexDirection="row"
+                    justifyContent="flex-start"
+                    sx={{ width: '90%'}}>
                     <Box
                         component="img"
                         src={logo}
@@ -19,7 +23,6 @@ const BookListTab = () => {
                         <Typography>{name}</Typography>
                         <Typography>{author}</Typography>
                     </Box>
-
                 </Box>
             ))}
         </>
