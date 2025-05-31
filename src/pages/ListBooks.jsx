@@ -1,9 +1,13 @@
-import { Box, Grid, Typography } from "@mui/material";
+import {Box, Button, Grid, Typography} from "@mui/material";
 import { useSelector } from "react-redux";
 import ItemBook from "../components/ItemBook.jsx";
+import {COLLECTION_GROUP} from "../constants/COLLECTION_GROUP.js";
+import EditingCollection from "./EditingCollection.jsx";
+import {useState} from "react";
 
 const ListBooks = () => {
-    const { books } = useSelector((state) => state.book);
+    const { books, collectionBooks } = useSelector((state) => state.book);
+    const [openCollection, setOpenCollection] = useState(false);
 
     if (!books || books.length === 0) {
         return (
@@ -15,36 +19,63 @@ const ListBooks = () => {
         );
     }
 
+    const aaaaa = () => {
+        console.log(books.collectionBooks);
+    }
+
     return (
-        <Box
-            backgroundColor='#F8F4E3'
-            padding="25px"
-        >
-            <Typography variant="h4" align="center">
+        <Box >
+            <Button onClick={aaaaa}>Проверить</Button>
+            <Typography variant="h2" align="center" color="white">
                 Список прочитанных книг
             </Typography>
             <Box
-                display="flex"
-                justifyContent="row"
+                backgroundColor='#F8F4E3'
+                padding="25px"
+                px={{marginTop: "40px"}}
             >
-                <Box width="80%">
-                    <Grid container spacing={3} marginTop="2px">
-                        {books.map((book) => (
-                            <Grid item key={book.id} xs={12} sm={6} md={4} lg={3}>
-                                <ItemBook book={book} />
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
+
                 <Box
-                    width="20%"
-                    marginLeft="20px"
-                    marginTop="20px"
-                    backgroundColor='#E0DFDF'
+                    display="flex"
+                    justifyContent="row"
                 >
-                    <Typography variant="body1">
-                        Тут будет подборка, сортировка и поиск?
-                    </Typography>
+                    <Box width="80%">
+                        <Grid container spacing={3} marginTop="2px">
+                            {books.map((book) => (
+                                <Grid item key={book.id} xs={12} sm={6} md={4} lg={3}>
+                                    <ItemBook book={book} />
+                                </Grid>
+                            ))}
+                        </Grid>
+                    </Box>
+                    <Box
+                        width="20%"
+                        marginLeft="20px"
+                        marginTop="20px"
+                        backgroundColor='#E0DFDF'
+                    >
+                        <Typography variant="body1">
+                            Тут будет подборка, сортировка и поиск?
+                        </Typography>
+
+                        <Box padding="20px">
+                            {COLLECTION_GROUP.map((group) => (
+                                <Box key={group.title}>
+                                   <Typography>{group.title}</Typography>
+                                    {group.fields.map((field) => (
+                                        <Button key={field.name}>{field.name}</Button>
+                                    ))}
+                                </Box>
+                            ))}
+
+                            {collectionBooks?.map((collection) => (
+                                <Button key={collection.id}>{collection.name}</Button>
+                            ))}
+                            <Button onClick={() => setOpenCollection(true)}>Добавить коллекцию</Button>
+
+                            <EditingCollection open = {openCollection} setOpen={setOpenCollection} />
+                        </Box>
+                    </Box>
                 </Box>
             </Box>
         </Box>

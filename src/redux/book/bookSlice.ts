@@ -42,8 +42,15 @@ interface IBook {
     };
 }
 
+interface ICollection {
+    id: string;
+    name: string;
+    collection: IBook[];
+}
+
 interface BookState {
     books: IBook[];
+    collectionBooks: ICollection[];
     isLoading: boolean;
     error: string | null;
     currentBook: IBook | null;
@@ -51,6 +58,7 @@ interface BookState {
 
 const initialState: BookState = {
     books: [],
+    collectionBooks: [],
     isLoading: false,
     error: null,
     currentBook: null,
@@ -70,14 +78,6 @@ const bookSlice = createSlice({
 
         removeBook: (state, action: PayloadAction<string>) => {
             state.books = state.books.filter(book => book.id !== action.payload);
-        },
-
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
-        },
-
-        setError: (state, action) => {
-            state.error = action.payload;
         },
 
         setCurrentBookById: (state, action: PayloadAction<string>) => {
@@ -102,7 +102,7 @@ const bookSlice = createSlice({
             }
         },
 
-        updateBookAvatar: (state, action: PayloadAction<{id: string; avatar: string | null}>) => {
+        updateBookAvatar: (state, action: PayloadAction<{ id: string; avatar: string | null }>) => {
             const index = state.books.findIndex(book => book.id === action.payload.id);
 
             if (index !== -1) {
@@ -152,9 +152,24 @@ const bookSlice = createSlice({
                     state.currentBook.personages = state.currentBook.personages.filter(p => p.id !== action.payload.personageId);
                 }
             }
-        }
-    },
+        },
+
+        addCollection: (state, action: PayloadAction<ICollection>) => {
+            state.collectionBooks.push(action.payload);
+        },
+
+        removeCollection: (state, action: PayloadAction<string>) => {
+            state.collectionBooks = state.collectionBooks.filter(collection => collection.id !== action.payload);
+        },
+
+        updateCollectionBook: (state, action: PayloadAction<ICollection>) => {
+            const index = state.collectionBooks.collection.findIndex(collection => collection.id === action.payload.id);
+            if (index !== -1) {
+                state.collectionBooks.collection[index] = action.payload.collection;
+            }
+        },
+    }
 });
 
-export const { setBooks, addBook, updateBookAvatar, removeBook, setLoading, setError, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage} = bookSlice.actions;
+export const { setBooks, addBook, updateBookAvatar, removeBook, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage, addCollection, removeCollection, updateCollectionBook} = bookSlice.actions;
 export default bookSlice.reducer;
