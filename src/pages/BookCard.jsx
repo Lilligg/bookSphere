@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import TabBook from "../components/bookCard/TabBook.jsx";
 import BookInfo from "../components/bookCard/BookInfo.jsx";
 import {useParams} from "react-router-dom";
@@ -10,6 +10,7 @@ const BookCard = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const currentBook = useSelector((state) => state.book.currentBook);
+
 
     useEffect(() => {
         if (id) {
@@ -24,8 +25,15 @@ const BookCard = () => {
     return (
         <Box padding="25px">
             <BookInfo currentBook={currentBook}/>
-            <Box backgroundColor = '#D4D4D4' sx={{opacity:"0.97", marginTop: "50px"}}>
-                <TabBook currentBook={currentBook}/>
+            <Box backgroundColor = '#D4D4D4' display="flex" flexDirection="row" sx={{opacity:"0.97", marginTop: "50px"}}>
+                <Box>
+                    <TabBook currentBook={currentBook}/>
+                </Box>
+                <Box width="40%" marginTop="20px">
+                    <Typography variant="body1" align="center">
+                       Статус: {}
+                    </Typography>
+                </Box>
             </Box>
         </Box>
     )

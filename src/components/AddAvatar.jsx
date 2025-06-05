@@ -104,7 +104,6 @@ const AddAvatar = (props) => {
             alignItems: 'center',
             mb: 4,
             gap: 2,
-            width: "30%",
         }}>
             <Typography variant="h6">{title}</Typography>
             <Avatar
