@@ -1,47 +1,39 @@
-import {Box, Button, Grid, Typography} from "@mui/material";
-import { useSelector } from "react-redux";
+import { Box, Button, Grid, Typography } from "@mui/material";
+import {useDispatch, useSelector} from "react-redux";
 import ItemBook from "../components/ItemBook.jsx";
-import {COLLECTION_GROUP} from "../constants/COLLECTION_GROUP.js";
-import EditingCollection from "./EditingCollection.jsx";
-import {useState} from "react";
+import {SORT_BUTTON_GROUP} from "../constants/SORT_BUTTON_GROUP.js";
+import EditingCollectionDialog from "./EditingCollectionDialog.jsx";
+import {useEffect, useState} from "react";
+import ButtonSort from "../components/ButtonSort.jsx";
+import {setListBooks} from "../redux/book/bookSlice.js";
 
 const ListBooks = () => {
-    const { books, collectionBooks } = useSelector((state) => state.book);
+    const { collectionBooks, listBooks } = useSelector((state) => state.book);
     const [openCollection, setOpenCollection] = useState(false);
+    const dispatch = useDispatch();
 
-    if (!books || books.length === 0) {
-        return (
-            <Box textAlign="center" backgroundColor='#F8F4E3'>
-                <Typography variant="h5" gutterBottom>
-                    Книги не найдены
-                </Typography>
-            </Box>
-        );
-    }
+    useEffect(() => {
+        dispatch(setListBooks("allBooks"))
+    }, [])
 
-    const aaaaa = () => {
-        console.log(books.collectionBooks);
+    const handleCollectionClick = (name) => {
+        dispatch(setListBooks(name));
     }
 
     return (
-        <Box >
-            <Button onClick={aaaaa}>Проверить</Button>
+        <Box>
             <Typography variant="h2" align="center" color="white">
                 Список прочитанных книг
             </Typography>
             <Box
                 backgroundColor='#F8F4E3'
                 padding="25px"
-                px={{marginTop: "40px"}}
+                px={{ marginTop: "40px" }}
             >
-
-                <Box
-                    display="flex"
-                    justifyContent="row"
-                >
+                <Box display="flex" justifyContent="row">
                     <Box width="80%">
                         <Grid container spacing={3} marginTop="2px">
-                            {books.map((book) => (
+                            {listBooks?.map((book) => (
                                 <Grid item key={book.id} xs={12} sm={6} md={4} lg={3}>
                                     <ItemBook book={book} />
                                 </Grid>
@@ -54,30 +46,38 @@ const ListBooks = () => {
                         marginTop="20px"
                         backgroundColor='#E0DFDF'
                     >
-                        <Typography variant="body1">
-                            Тут будет подборка, сортировка и поиск?
+                        <Typography variant="h6" gutterBottom>
+                            Сортировка
                         </Typography>
 
-                        <Box padding="20px">
-                            {COLLECTION_GROUP.map((group) => (
-                                <Box key={group.title}>
-                                   <Typography>{group.title}</Typography>
-                                    {group.fields.map((field) => (
-                                        <Button key={field.name}>{field.name}</Button>
-                                    ))}
-                                </Box>
+                        <ButtonSort configuration = {SORT_BUTTON_GROUP}/>
+
+                            <Typography variant="h6" gutterBottom mt={4}>
+                                Коллекции
+                            </Typography>
+
+                            <Button fullWidth sx={{ mb: 1 }} onClick={() => handleCollectionClick("allBooks")}>
+                                Все книги
+                            </Button>
+
+                            {collectionBooks.map((collection) => (
+                                <Button key={collection.id} fullWidth sx={{ mb: 1 }} onClick={() => handleCollectionClick(collection.name)}>
+                                    {collection.name}
+                                </Button>
                             ))}
 
-                            {collectionBooks?.map((collection) => (
-                                <Button key={collection.id}>{collection.name}</Button>
-                            ))}
-                            <Button onClick={() => setOpenCollection(true)}>Добавить коллекцию</Button>
-
-                            <EditingCollection open = {openCollection} setOpen={setOpenCollection} />
+                            <Button
+                                fullWidth
+                                variant="contained"
+                                onClick={() => setOpenCollection(true)}
+                                sx={{ mt: 2 }}
+                            >
+                                Добавить коллекцию
+                            </Button>
                         </Box>
                     </Box>
                 </Box>
-            </Box>
+            <EditingCollectionDialog open={openCollection} setOpen={setOpenCollection} />
         </Box>
     );
 };

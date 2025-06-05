@@ -12,6 +12,7 @@ import AddQuoteForm from "../components/editingBook/AddQuoteForm.jsx";
 import QuoteCard from "../components/editingBook/QuoteCard.jsx";
 import AddAvatar from "../components/AddAvatar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
+import {EDITING_STATISTIC_BOOK} from "../constants/EDITING_STATISTIC_BOOK.js";
 
 const INITIAL_FORM_BOOK = {
     id: "",
@@ -34,6 +35,13 @@ const INITIAL_FORM_BOOK = {
         emotionalImpact: 0,
         readingDifficulty: 0,
         rereadValue: 0,
+    },
+    statistics: {
+        status: "В процессе" | "Завершен" | "Заморожено" | "В планах",
+        startDateOfReading: "",
+        endDateOfReading: "",
+        totalNumberOfPages: 0,
+        numberOfPagesRead: 0,
     }
 }
 
@@ -108,7 +116,9 @@ const EditingBook = () => {
 
             dispatch(addBook(newBook));
             navigate(`/bookCard/${newBook.id}`)
+            console.log(newBook)
         }
+
     };
 
     return (
@@ -120,7 +130,7 @@ const EditingBook = () => {
             </Typography>
 
             <Box display="flex" flexDirection="row">
-                <Box width="70%">
+                <Box width="70%" padding="30px">
                     {EDITING_BOOK_FIELD_GROUP.map((group, index) => (
                         <FieldEditingForm
                             key={index}
@@ -211,11 +221,27 @@ const EditingBook = () => {
                     />
                 </Box>
 
-                <AddAvatar
-                    title = "Обложка книги"
-                    type = {id? "typeBook" : "typeNewBook"}
-                    onAvatarChange = {avatarSubmit}
-                />
+                <Box width="30%">
+
+                    {EDITING_STATISTIC_BOOK.map((group, index) => (
+                        <FieldEditingForm
+                            key={index}
+                            group={group}
+                            formData={formData}
+                            handleChange={handleChange}
+                            handleMultiSelectChange={handleMultiSelectChange}
+                        />
+                    ))}
+
+                    <Box>
+                    <AddAvatar
+                        title = "Обложка книги"
+                        type = {id? "typeBook" : "typeNewBook"}
+                        onAvatarChange = {avatarSubmit}
+                    />
+                </Box>
+                </Box>
+
             </Box>
 
             <Button

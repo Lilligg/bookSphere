@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 interface IPersonage {
     id: string;
@@ -8,6 +8,20 @@ interface IPersonage {
     appearance?: string;
     character?: string;
     description?: string;
+}
+
+interface IQuotes {
+    id: string;
+    person?: string | null;
+    text: string;
+}
+
+interface IStatistics {
+    status?: "В процессе" | "Завершен" | "Заморожено" | "В планах";
+    startDateOfReading?: string;
+    endDateOfReading?: string;
+    totalNumberOfPages?: number;
+    numberOfPagesRead?: number;
 }
 
 interface IBook {
@@ -23,11 +37,7 @@ interface IBook {
 
     personages: IPersonage[],
 
-    quotes?: {
-       id: string;
-       person?: string | null;
-       text: string;
-    }[] | null;
+    quotes?: IQuotes[] | null;
 
     overallRating?: number;
     rating?: {
@@ -40,6 +50,7 @@ interface IBook {
         readingDifficulty: number;
         rereadValue: number;
     };
+    statistics?: IStatistics;
 }
 
 interface ICollection {
@@ -54,6 +65,11 @@ interface BookState {
     isLoading: boolean;
     error: string | null;
     currentBook: IBook | null;
+    sortConfig: {
+        key: 'title' | 'author' | 'yearPublication' | 'overallRating';
+        direction: 'asc' | 'desc';
+    };
+    listBooks: IBook[];
 }
 
 const initialState: BookState = {
@@ -62,6 +78,11 @@ const initialState: BookState = {
     isLoading: false,
     error: null,
     currentBook: null,
+    sortConfig: {
+        key: 'title',
+        direction: 'asc',
+    },
+    listBooks: [],
 };
 
 const bookSlice = createSlice({
@@ -155,6 +176,9 @@ const bookSlice = createSlice({
         },
 
         addCollection: (state, action: PayloadAction<ICollection>) => {
+            if (!state.collectionBooks) {
+                state.collectionBooks = [];
+            }
             state.collectionBooks.push(action.payload);
         },
 
@@ -168,8 +192,107 @@ const bookSlice = createSlice({
                 state.collectionBooks.collection[index] = action.payload.collection;
             }
         },
-    }
+
+        setSortConfig: (state, action: PayloadAction<{
+            key: 'title' | 'author' | 'yearPublication' | 'overallRating';
+            direction?: 'asc' | 'desc';
+        }>) => {
+            const { key, direction } = action.payload;
+
+            // Определяем новое направление
+            let newDirection: 'asc' | 'desc' = direction ||
+                (state.sortConfig.key === key
+                    ? (state.sortConfig.direction === 'asc' ? 'desc' : 'asc')
+                    : 'asc');
+
+            // Фильтруем пустые или невалидные книги перед сортировкой
+            const validBooks = (state.listBooks.length > 0 ? state.listBooks : state.books).filter(book =>
+                book && book.id && book[key] !== undefined
+            );
+
+            // Сортируем только валидные книги
+            const sortedBooks = [...validBooks].sort((a, b) => {
+                const aValue = a[key] ?? '';
+                const bValue = b[key] ?? '';
+
+                // Для числовых значений
+                if (key === 'yearPublication' || key === 'overallRating') {
+                    const aNum = Number(aValue) || 0;
+                    const bNum = Number(bValue) || 0;
+                    return newDirection === 'asc' ? aNum - bNum : bNum - aNum;
+                }
+
+                // Для строк
+                if (typeof aValue === 'string' && typeof bValue === 'string') {
+                    return newDirection === 'asc'
+                        ? aValue.localeCompare(bValue)
+                        : bValue.localeCompare(aValue);
+                }
+
+                return 0;
+            });
+
+            // Сохраняем изменения
+            state.sortConfig = { key, direction: newDirection };
+            state.listBooks = sortedBooks;
+        },
+
+        setListBooks(state, action: PayloadAction<string>) {
+            if (action.payload === "allBooks") {
+                state.listBooks = state.books;
+
+            } else {
+                const foundCollection = state.collectionBooks.find(
+                    collection => collection.name === action.payload
+                );
+                if (foundCollection) {
+                    state.listBooks = foundCollection.collection;
+                }
+            }
+        },
+
+        addBookToCollectionById: (state, action: PayloadAction<{collectionId, bookId}>) => {
+            const { collectionId, bookId } = action.payload;
+
+            // 1. Находим коллекцию
+            const collection = state.collectionBooks.find(coll => coll.id === collectionId);
+            if (!collection) return;
+
+            // 2. Находим книгу в общем списке
+            const bookToAdd = state.books.find(book => book.id === bookId);
+            if (!bookToAdd) return;
+
+            // 3. Проверяем, нет ли уже такой книги в коллекции
+            const bookExists = collection.collection.some(b => b.id === bookId);
+            if (bookExists) return;
+
+            // 4. Добавляем книгу
+            collection.collection.push(bookToAdd);
+
+            // 5. Обновляем текущий список, если он отображается
+            if (state.currentCollection?.id === collectionId) {
+                state.currentCollection = collection;
+            }
+        },
+    },
 });
 
-export const { setBooks, addBook, updateBookAvatar, removeBook, updateBook, setCurrentBookById, addPersonage, updatePersonage, removePersonage, addCollection, removeCollection, updateCollectionBook} = bookSlice.actions;
+export const {
+    setBooks,
+    addBook,
+    updateBookAvatar,
+    removeBook,
+    updateBook,
+    setCurrentBookById,
+    addPersonage,
+    updatePersonage,
+    removePersonage,
+    addCollection,
+    removeCollection,
+    updateCollectionBook,
+    setSortConfig,
+    setListBooks,
+    addBookToCollectionById
+} = bookSlice.actions;
+
 export default bookSlice.reducer;

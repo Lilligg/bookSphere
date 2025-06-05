@@ -4,25 +4,27 @@ import { v4 as uuidv4 } from 'uuid';
 import {useDispatch} from "react-redux";
 import {addCollection} from "../redux/book/bookSlice.js";
 
-const EditingCollection = (props) => {
+const EditingCollectionDialog = (props) => {
     const { open, setOpen } = props
     const dispatch = useDispatch();
     const [collection, setCollection] = useState(
         {
-            id: undefined,
+            id: null,
             name: "",
             collection: []
         }
     );
-    
+
+
     const saveCollection = () => {
-    const newCollection = {
-        ...collection,
-        id: uuidv4(),
-    }
-    console.log(newCollection);
-    dispatch(addCollection(newCollection));
-    setOpen(false)
+        const newCollection = {
+            ...collection,
+            id: uuidv4()
+        }
+
+        console.log(newCollection);
+        dispatch(addCollection(newCollection));
+        setOpen(false)
     }
     
     return (
@@ -37,9 +39,9 @@ const EditingCollection = (props) => {
                 })
             }
             />
-            <Button onClick={saveCollection}>Создать коллекцию</Button>
+            <Button onClick={ saveCollection }>Создать коллекцию</Button>
             <Button onClick={() => setOpen(false)}>Отменить</Button>
         </Dialog>
     )
 }
-export default EditingCollection
+export default EditingCollectionDialog

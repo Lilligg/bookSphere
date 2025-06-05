@@ -7,17 +7,11 @@ const TabBook = (props) => {
 
     return (
         <Box
-            marginTop = "30px"
             display="flex"
             flexDirection="row"
         >
-            <Box width="60%">
+            <Box>
                 <CustomTabs data = {BOOK_TABS(currentBook) }/>
-            </Box>
-            <Box width="40%" marginTop="20px">
-                <Typography variant="body1" align="center">
-                    Тут будет статистика по книге
-                </Typography>
             </Box>
         </Box>
     )
