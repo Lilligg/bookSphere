@@ -1,4 +1,4 @@
-import {Box, Typography, Rating, Grid} from "@mui/material";
+import {Box, Typography, Rating} from "@mui/material";
 import { RATING_TABS } from "../../../constants/bookCard/RATING_TABS.js";
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 
@@ -41,12 +41,10 @@ const RatingTabs = (props) => {
                         {tab.text.map((text, index) => (
                             <Typography variant="body1" key={`text${index}`}>
                                {text}
-                            </Typography> ))}
+                            </Typography>
+                        ))}
                     </Box>
-
-
-</Box>
-
+                </Box>
             ))}
         </Box>
     )

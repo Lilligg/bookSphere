@@ -30,7 +30,7 @@ const EditingRatings = (props) => {
     };
 
     return (
-        <>
+        <Box>
             <Typography
                 variant="h6"
                 sx={{
@@ -47,26 +47,24 @@ const EditingRatings = (props) => {
 
             {RATING_TABS.map((tab) => (
                 <Box key={tab.name}>
-                        <Box margin="10px">
-                            <Typography
-                                variant="subtitle1"
-                                color="text.secondary"
-                            >
-                                {tab.label}:
-                            </Typography>
-                            <Rating
-                                name={tab.name}
-                                value={formData.rating[tab.name] || 0}
-                                precision={0.5}
-                                onChange={(e, newValue) => handleChange(tab.name, newValue)}
-                                size="medium"
-                            />
-                        </Box>
-
-
+                    <Box margin="10px">
+                        <Typography
+                            variant="subtitle1"
+                            color="text.secondary"
+                        >
+                            {tab.label}:
+                        </Typography>
+                        <Rating
+                            name={tab.name}
+                            value={formData.rating[tab.name] || 0}
+                            precision={0.5}
+                            onChange={(e, newValue) => handleChange(tab.name, newValue)}
+                            size="medium"
+                        />
+                    </Box>
                 </Box>
             ))}
-        </>
+        </Box>
     );
 };
 

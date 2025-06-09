@@ -1,23 +1,49 @@
 import { Box, Typography } from "@mui/material";
+import BookSection from "../../BookSection.jsx";
+import {
+    MenuBook,
+    Person,
+    Group,
+    Mood,
+    MoodBad
+} from '@mui/icons-material';
 
 const AboutTabs = (props) => {
     const { currentBook } = props;
 
     return (
-        <Box>
-            <Typography variant="h5">Сюжет</Typography>
-            <Typography variant="body1">{currentBook.about}</Typography>
+        <Box sx={{ padding: "6px" }}>
+            <BookSection
+                title="Сюжет"
+                content={currentBook.about}
+                icon={<MenuBook fontSize="medium" />}
+            />
 
-            <Typography variant="h5" marginTop="15px">Об авторе</Typography>
-            <Typography variant="body1">{currentBook.aboutAuthor}</Typography>
+            <BookSection
+                title="Об авторе"
+                content={currentBook.aboutAuthor}
+                marginTop="15px"
+                icon={<Person fontSize="medium" />}
+            />
 
-            <Typography variant="h5" marginTop="15px">Для кого эта книга</Typography>
+            <Typography variant="h5" sx={{ marginTop: 3, marginBottom: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Group fontSize="medium" /> Для кого эта книга
+            </Typography>
 
-            <Typography variant="h6">Идеальный читатель</Typography>
-            <Typography variant="body1">{currentBook.perfectReader}</Typography>
+            <BookSection
+                title="Идеальный читатель"
+                content={currentBook.perfectReader}
+                variant="h6"
+                icon={<Mood fontSize="small" />}
+            />
 
-            <Typography variant="h6" marginTop="15px">Кому не подойдет</Typography>
-            <Typography variant="body1">{currentBook.whoDoesNotLove}</Typography>
+            <BookSection
+                title="Кому не подойдет"
+                content={currentBook.whoDoesNotLove}
+                variant="h6"
+                marginTop="10px"
+                icon={<MoodBad fontSize="small" />}
+            />
         </Box>
     )
 }

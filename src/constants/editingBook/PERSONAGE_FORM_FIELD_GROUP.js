@@ -1,5 +1,4 @@
-import {STATUS_PERSONAGES} from "./STATUS_PERSONAGES.js";
-import {GENDER_OPTIONS} from "./FIELD_OPTIONS.js";
+import {GENDER_OPTIONS, STATUS_PERSONAGES} from "../FIELD_OPTIONS.js";
 
 export const PERSONAGE_FORM_FIELD_GROUP = [
     {

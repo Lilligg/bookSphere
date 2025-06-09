@@ -1,4 +1,4 @@
-import {GENRE_OPTIONS} from "./FIELD_OPTIONS.js";
+import {GENRE_OPTIONS} from "../FIELD_OPTIONS.js";
 
 export const EDITING_BOOK_FIELD_GROUP = [
     {

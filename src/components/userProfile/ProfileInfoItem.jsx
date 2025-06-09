@@ -1,4 +1,4 @@
-import {Box, Divider, Typography} from "@mui/material";
+import {Box, Typography} from "@mui/material";
 import {useSelector} from "react-redux";
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import {arrayToString} from "../../function/arrayToString.js";
@@ -31,7 +31,6 @@ const ProfileInfoItem = (props) => {
                         letterSpacing: 0.5
                     }}
                 >
-
                     {item.label}
                 </Typography>
             </Box>
@@ -43,16 +42,15 @@ const ProfileInfoItem = (props) => {
                     pl: 4,
                     mb: 2,
                     color: 'text.secondary',
-                    minHeight: 24 // Чтобы сохранить высоту при пустом значении
+                    minHeight: 24
                 }}
             >
                 {
                     Array.isArray(user[item.value])
                     ? arrayToString(user[item.value])
-                    : user[item.value]
+                    : user[item.value] || "Не указано"
                 }
             </Typography>
-
         </Box>
     )
 }

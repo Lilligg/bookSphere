@@ -1,11 +1,11 @@
-import {Box, Typography} from "@mui/material";
+import { Box } from "@mui/material";
 import BookInfo from "../components/bookCard/BookInfo.jsx";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {setCurrentBookById} from "../redux/book/bookSlice.js";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setCurrentBookById } from "../redux/book/bookSlice.js";
 import CustomTabs from "../components/CustomTabs.jsx";
-import {BOOK_TABS} from "../constants/bookCard/BOOK_TABS.jsx";
+import { BOOK_TABS } from "../constants/bookCard/BOOK_TABS.jsx";
 
 const BookCard = () => {
     const { id } = useParams();
@@ -37,7 +37,6 @@ const BookCard = () => {
                 <Box width="100%">
                     <CustomTabs data = {BOOK_TABS(currentBook)}/>
                 </Box>
-
             </Box>
         </Box>
     )

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../redux/user/userSlice.ts";
 import FieldEditingForm from "../components/FieldEditingForm.jsx";
-import { EDITING_PROFILE_FIELD_GROUPS } from "../constants/EDITING_PROFILE_FIELD_GROUPS.js";
+import { EDITING_PROFILE_FIELD_GROUPS } from "../constants/editingProfile/EDITING_PROFILE_FIELD_GROUPS.js";
 import AddAvatar from "../components/AddAvatar.jsx";
 
 const INITIAL_FORM_USER = {
@@ -89,9 +89,7 @@ const EditingProfile = () => {
                     type = "typeUser"
                 />
             </Box>
-
         </Box>
-
             <Button
                 variant="contained"
                 fullWidth

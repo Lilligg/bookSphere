@@ -1,6 +1,6 @@
 import { Box, Button, Divider, Grid, MenuItem, TextField, Typography } from "@mui/material";
 import PersonageCard from "../../editingBook/PersonageCard.jsx";
-import PersonageFullCardDialog from "./PersonageFullCardDialog.jsx";
+import PersonageFullCardDialog from "../../../pages/PersonageFullCardDialog.jsx";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setListPerson } from "../../../redux/book/bookSlice.js";
@@ -80,7 +80,6 @@ const PersonagesTabs = ({ currentBook }) => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
-            {/* Основной контент */}
             <Box sx={{ flex: 3 }}>
                 <Grid container spacing={3}>
                     {(listPerson || currentBook.personages).map((personage) => (
@@ -94,7 +93,6 @@ const PersonagesTabs = ({ currentBook }) => {
                 </Grid>
             </Box>
 
-            {/* Панель фильтров */}
             <Box sx={{ flex: 1, p: 2, }}>
                 <Typography variant="h6" gutterBottom>Фильтры</Typography>
 

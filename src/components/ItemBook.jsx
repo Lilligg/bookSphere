@@ -1,9 +1,7 @@
 import {
     Box,
-    Button,
     Card,
     CardContent,
-    CardHeader,
     CardMedia,
     IconButton,
     Menu,
@@ -13,44 +11,40 @@ import {
 import imgBook from "../assets/noBook.jpg";
 import { Link } from "react-router-dom";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import {USER_MENU} from "../constants/navigation/USER_MENU.js";
 import {useState} from "react";
 import AddBookInCollectionDialog from "../pages/AddBookInCollectionDialog.jsx";
 import {useDispatch} from "react-redux";
 import {removeBook} from "../redux/book/bookSlice.js";
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import BookmarksIcon from '@mui/icons-material/Bookmarks';
-import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 
 const ItemBook = (props) => {
     const { book } = props;
     const dispatch = useDispatch();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openDialogAddBookCollection , setOpenDialogAddBookCollection] = useState(false);
+
+    const open = Boolean(anchorEl);
     const rating = book.overallRating;
     const roundedRating = rating % 1 === 0 ? rating : rating.toFixed(1);
 
-    const [anchorEl, setAnchorEl] = useState(null);
-    const [openDialog , setOpenDialog] = useState(false);
-
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event) => {
+    const handleClickOpenMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleCloseMenu = () => {
         setAnchorEl(null);
     };
 
-    const handleCloseDialog = () => {
-        setOpenDialog(false);
+    const handleCloseDialogAddBookCollection = () => {
+        setOpenDialogAddBookCollection(false);
     }
 
-    const handleDialog = () => {
-        setOpenDialog(true);
+    const handleDialogCollection = () => {
+        setOpenDialogAddBookCollection(true);
     }
 
     const removeBookClick = () => {
-        handleClose();
+        handleCloseMenu();
 
         const isConfirmed = window.confirm(
             `Вы действительно хотите удалить книгу "${book.title}"? Отменить это действие будет невозможно.`
@@ -58,7 +52,6 @@ const ItemBook = (props) => {
 
         if (isConfirmed) {
             dispatch(removeBook(book.id));
-            console.log("Elfkztv");
         }
     }
 
@@ -83,23 +76,21 @@ const ItemBook = (props) => {
 
     return (
         <Card
-            component="div" // Меняем Link на обычный div
+            component="div"
             sx={{
                 height: "100%",
                 display: "flex",
                 flexDirection: "column",
                 position: 'relative',
                 background: 'transparent',
-                cursor: 'pointer', // Добавляем курсор для интерактивности
-                overflow: 'visible', // Разрешаем выход содержимого за границы
+                overflow: 'visible',
                 boxShadow: 'none',
-                transition: 'transform 0.2s', // Анимация при наведении
+                transition: 'transform 0.2s',
                 '&:hover': {
-                    transform: 'scale(1.03)' // Увеличение при наведении
+                    transform: 'scale(1.03)'
                 }
             }}
         >
-            {/* Обёртка для ссылки */}
             <Link
                 to={`/bookCard/${book.id}`}
                 style={{
@@ -109,7 +100,6 @@ const ItemBook = (props) => {
                     flexDirection: 'column'
                 }}
             >
-                {/* Содержимое карточки */}
                 <CardMedia
                     component="img"
                     sx={{ width: '100%', height: '260px', objectFit: 'cover', borderRadius: "10px", boxShadow: '3',}}
@@ -133,19 +123,22 @@ const ItemBook = (props) => {
                         display: '-webkit-box',
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: 'vertical',
-                        color: 'text.primary', // Явно задаем цвет текста
+                        color: 'text.primary',
                     }}>
                         {book.title || "Без названия"}
                     </Typography>
-                    <Typography variant="body2" sx={{ // Убрали color="text.secondary"
-                        mt: 0.5,
-                        fontSize: '0.875rem',
-                        lineHeight: 'inherit',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        color: 'text.secondary', // Явно задаем цвет через sx
-                    }}>
+                    <Typography
+                        variant="body2"
+                        sx={{
+                            mt: 0.5,
+                            fontSize: '0.875rem',
+                            lineHeight: 'inherit',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            color: 'text.secondary',
+                        }}
+                    >
                         {book.author || "Автор не указан"}
                     </Typography>
                 </CardContent>
@@ -168,7 +161,7 @@ const ItemBook = (props) => {
                         }}
                     >
                         <Typography
-                            color="white"  // Изменил на white для лучшей читаемости
+                            color="white"
                             sx={{
                                 fontSize: '12px',
                                 fontWeight: 'bold',
@@ -200,7 +193,7 @@ const ItemBook = (props) => {
                         }}
                     >
                         <Typography
-                            color="white"  // Изменил на white для лучшей читаемости
+                            color="white"
                             sx={{
                                 fontSize: '12px',
                                 fontWeight: 'bold',
@@ -215,36 +208,33 @@ const ItemBook = (props) => {
                 )}
             </Link>
 
-
-            {/* Кнопка меню теперь вне ссылки */}
-            <IconButton
-                aria-label="menu"
+        <IconButton
+            aria-label="menu"
+            sx={{
+                position: 'absolute',
+                right: -12,
+                top: 255,
+                zIndex: 3,
+            }}
+            onClick={handleClickOpenMenu}
+        >
+            <MoreVertIcon
+                fontSize="medium"
                 sx={{
-                    position: 'absolute',
-                    right: -12,
-                    top: 255,
-                    zIndex: 3,
-                }}
-                onClick={handleClick}
-            >
-                <MoreVertIcon
-                    fontSize="medium"
-                    sx={{
-                     color: "#7F5539",}}
-                    />
-            </IconButton>
+                 color: "#7F5539",}}
+                />
+        </IconButton>
 
             <Menu
                 anchorEl={anchorEl}
                 open={open}
-                onClose={handleClose}
+                onClose={handleCloseMenu}
             >
-                <MenuItem onClick={handleDialog}>Добавить в коллекцию</MenuItem>
-                <MenuItem onClick={handleDialog}>Изменить</MenuItem>
+                <MenuItem onClick={handleDialogCollection}>Добавить в коллекцию</MenuItem>
                 <MenuItem onClick={removeBookClick}>Удалить</MenuItem>
             </Menu>
 
-            <AddBookInCollectionDialog book={book} open={openDialog} onClose={handleCloseDialog} />
+            <AddBookInCollectionDialog book={book} open={openDialogAddBookCollection} onClose={handleCloseDialogAddBookCollection} />
         </Card>
     );
 };

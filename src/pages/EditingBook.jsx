@@ -6,13 +6,13 @@ import {addBook, setCurrentBookById, updateBook} from "../redux/book/bookSlice";
 import AddPersonageForm from "./AddPersonageForm.jsx";
 import PersonageCard from "../components/editingBook/PersonageCard.jsx";
 import { v4 as uuidv4 } from 'uuid';
-import { EDITING_BOOK_FIELD_GROUP } from "../constants/EDITING_BOOK_FIELD_GROUP.js";
+import { EDITING_BOOK_FIELD_GROUP } from "../constants/editingBook/EDITING_BOOK_FIELD_GROUP.js";
 import EditingRatings from "../components/editingBook/EditingRatings.jsx";
 import AddQuoteFormDialog from "./AddQuoteFormDialog.jsx";
 import QuoteCard from "../components/editingBook/QuoteCard.jsx";
 import AddAvatar from "../components/AddAvatar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
-import {EDITING_STATISTIC_BOOK} from "../constants/EDITING_STATISTIC_BOOK.js";
+import {EDITING_STATISTIC_BOOK} from "../constants/editingBook/EDITING_STATISTIC_BOOK.js";
 
 const INITIAL_FORM_BOOK = {
     id: "",
@@ -75,6 +75,15 @@ const EditingBook = () => {
         });
     }, [currentBook, id]);
 
+    const validateFields = () => {
+        const newErrors = {
+            title: !formData.title.trim(),
+            author: !formData.author.trim(),
+            yearPublication: !formData.yearPublication
+        };
+        return !Object.values(newErrors).some(error => error);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -99,6 +108,11 @@ const EditingBook = () => {
     }
 
     const handleSubmit = () => {
+        if (!validateFields()) {
+            alert("Заполните обязательные поля: название, автор, год публикации")
+            return;
+        }
+
         if (id) {
             const newBook = {
                 ...formData

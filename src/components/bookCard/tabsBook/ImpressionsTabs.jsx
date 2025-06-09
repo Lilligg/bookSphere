@@ -1,26 +1,62 @@
 import { Box, Typography } from "@mui/material";
+import {
+    SentimentSatisfiedAlt,
+    Lightbulb,
+    ThumbUp,
+    ThumbDown,
+    Compare,
+} from '@mui/icons-material';
+import BookSection from "../../BookSection.jsx";
+import AirIcon from '@mui/icons-material/Air';
 
 const ImpressionsTabs = (props) => {
     const { currentBook } = props;
 
     return (
-        <Box>
-            <Typography variant="h6">Эмоции</Typography>
-            <Typography variant="body1">{currentBook.impressions}</Typography>
+        <Box sx={{ padding: "6px" }}>
+            <BookSection
+                title="Эмоции"
+                content={currentBook.impressions}
+                icon={<SentimentSatisfiedAlt fontSize="medium" />}
+                variant="h6"
+            />
 
-            <Typography variant="h6">Неожиданности</Typography>
-            <Typography variant="body1">{currentBook.surprises}</Typography>
+            <BookSection
+                title="Неожиданности"
+                content={currentBook.surprises}
+                icon={<AirIcon fontSize="medium" />}
+                variant="h6"
+                marginTop="15px"
+            />
 
-            <Typography variant="h6">Советы читателю</Typography>
-            <Typography variant="body1">{currentBook.tipsForTheReader}</Typography>
+            <BookSection
+                title="Советы читателю"
+                content={currentBook.tipsForTheReader}
+                icon={<Lightbulb fontSize="medium" />}
+                variant="h6"
+                marginTop="15px"
+            />
 
-            <Typography variant="h5" marginTop="15px">Плюсы и минусы работы</Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, marginTop: "8px", marginBottom: "4px" }}>
+                <Compare color="#FFFFFFF" fontSize="medium" />
+                <Typography variant="h5">Плюсы и минусы работы</Typography>
+            </Box>
 
-            <Typography variant="h6">Плюсы</Typography>
-            <Typography variant="body1">{currentBook.advantages}</Typography>
+            <BookSection
+                title="Плюсы"
+                content={currentBook.advantages}
+                icon={<ThumbUp fontSize="small" color="success" />}
+                variant="h6"
+                marginTop="10px"
+            />
 
-            <Typography variant="h6" marginTop="15px">минусы</Typography>
-            <Typography variant="body1">{currentBook.disadvantages}</Typography>
+            <BookSection
+                title="Минусы"
+                content={currentBook.disadvantages}
+                icon={<ThumbDown fontSize="small" color="error" />}
+                variant="h6"
+                marginTop="10px"
+            />
         </Box>
     )
 }

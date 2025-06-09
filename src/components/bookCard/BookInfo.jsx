@@ -62,42 +62,44 @@ const BookInfo = (props) => {
                         </Typography>
                     </Box>
 
-                    <Box>
-                        <Typography variant="h6" color="#EDE0D4">
-                            Общий рейтинг
-                        </Typography>
-
-                        <Box
-                            display="flex"
-                            flexDirection="row"
-                        >
-                            <Rating
-                                name="overall-score"
-                                value={currentBook.overallRating}
-                                precision={0.1}
-                                readOnly
-                                sx={{
-                                    '& .MuiRating-icon': {
-                                        color: "#debf76", // цвет заполненных звезд
-                                    },
-                                    '& .MuiRating-iconEmpty': {
-                                        color: '#d8d8d8', // цвет пустых звезд
-                                    }
-                                }}
-                            />
-
-                            <Typography
-                                variant="body1"
-                                color="#EDE0D4"
-                                sx={{
-                                    marginLeft:'5px',
-                                    whiteSpace: 'nowrap'
-                                }}
-                            >
-                                {currentBook.overallRating.toFixed(1)} / 5
+                    {currentBook.overallRating > 0 && (
+                        <Box>
+                            <Typography variant="h6" color="#EDE0D4">
+                                Общий рейтинг
                             </Typography>
+
+                            <Box
+                                display="flex"
+                                flexDirection="row"
+                            >
+                                <Rating
+                                    name="overall-score"
+                                    value={currentBook.overallRating}
+                                    precision={0.1}
+                                    readOnly
+                                    sx={{
+                                        '& .MuiRating-icon': {
+                                            color: "#debf76", // цвет заполненных звезд
+                                        },
+                                        '& .MuiRating-iconEmpty': {
+                                            color: '#d8d8d8', // цвет пустых звезд
+                                        }
+                                    }}
+                                />
+
+                                <Typography
+                                    variant="body1"
+                                    color="#EDE0D4"
+                                    sx={{
+                                        marginLeft:'5px',
+                                        whiteSpace: 'nowrap'
+                                    }}
+                                >
+                                    {currentBook.overallRating.toFixed(1)} / 5
+                                </Typography>
+                            </Box>
                         </Box>
-                    </Box>
+                    )}
                 </Box>
             </Box>
 

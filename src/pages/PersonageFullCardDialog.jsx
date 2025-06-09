@@ -1,10 +1,10 @@
 import { Box, Dialog, Typography, IconButton } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
-import malePersonage from "../../../assets/malePersonage.png";
-import womanPersonage from "../../../assets/womanPersonage.png";
+import malePersonage from "../assets/malePersonage.png";
+import womanPersonage from "../assets/womanPersonage.png";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPersonageById } from "../../../redux/book/bookSlice.js";
+import { setCurrentPersonageById } from "../redux/book/bookSlice.ts";
 import {Link} from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 

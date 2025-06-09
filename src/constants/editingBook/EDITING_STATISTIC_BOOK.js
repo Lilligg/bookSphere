@@ -1,4 +1,3 @@
-import {GENRE_OPTIONS} from "./FIELD_OPTIONS.js";
 
 export const EDITING_STATISTIC_BOOK = [
     {

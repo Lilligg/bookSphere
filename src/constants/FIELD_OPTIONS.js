@@ -71,3 +71,10 @@ export const READING_PLACES_OPTIONS = [
     { value: "На природе", label: "На природе" },
     { value: "В кафе", label: "В кафе" }
 ];
+
+export const STATUS_PERSONAGES = [
+    { value: "Главный герой", label: "Главный герой" },
+    { value: "Антагонист", label: "Антагонист" },
+    { value: "Второстепенный персонаж", label: "Второстепенный персонаж" },
+    { value: "Эпизодический персонаж", label: "Эпизодический персонаж" },
+];

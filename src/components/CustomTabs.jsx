@@ -3,7 +3,6 @@ import { TabList } from "@mui/lab";
 import Tab from "@mui/material/Tab";
 import TabPanel from "@mui/lab/TabPanel";
 import TabContext from "@mui/lab/TabContext";
-import {Divider} from "@mui/material";
 
 const CustomTabs = (props) => {
     const { data } = props;

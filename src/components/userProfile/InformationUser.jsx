@@ -1,15 +1,13 @@
 import {Box, Divider, Grid, Typography} from "@mui/material";
-import CustomTabs from "../CustomTabs.jsx";
-import QuoteCard from "../editingBook/QuoteCard.jsx";
 import {useSelector} from "react-redux";
 import {
     LITERARY_PREFERENCES_TAB_FIELD_GROUP
 } from "../../constants/userProfile/LITERARY_PREFERENCES_TAB_FIELD_GROUP.js";
-import ProfileInfoItem from "./ProfileInfoIten.jsx";
+import ProfileInfoItem from "./ProfileInfoItem.jsx";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 
-const LeftProfileTab = () => {
+const InformationUser = () => {
 const {user} = useSelector((state) => state.user);
 
     return (
@@ -21,7 +19,6 @@ const {user} = useSelector((state) => state.user);
             boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
             mb: 4
         }}>
-            {/* Заголовок "О себе" */}
             {user.aboutYourself && (
                 <Box sx={{ mb: 3 }}>
                     <Typography
@@ -51,14 +48,12 @@ const {user} = useSelector((state) => state.user);
                 </Box>
             )}
 
-            {/* Разделитель */}
             <Divider sx={{
                 borderColor: '#B08968',
                 opacity: 0.5,
                 my: 2
             }} />
 
-            {/* Литературные предпочтения */}
             <Box>
                 <Typography
                     variant="h5"
@@ -88,4 +83,4 @@ const {user} = useSelector((state) => state.user);
     )
 }
 
-export default LeftProfileTab
+export default InformationUser

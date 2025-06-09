@@ -6,7 +6,7 @@ import {
     READING_PLACES_OPTIONS,
     READING_SPEED_OPTIONS,
     READING_TIME_OPTIONS
-} from "./FIELD_OPTIONS.js";
+} from "../FIELD_OPTIONS.js";
 
 export const EDITING_PROFILE_FIELD_GROUPS = [
     {
