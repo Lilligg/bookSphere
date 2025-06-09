@@ -3,12 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useState} from "react";
 import FieldEditingForm from "../components/FieldEditingForm";
 import {addBook, setCurrentBookById, updateBook} from "../redux/book/bookSlice";
-import AddPersonageForm from "../components/editingBook/AddPersonageForm.jsx";
+import AddPersonageForm from "./AddPersonageForm.jsx";
 import PersonageCard from "../components/editingBook/PersonageCard.jsx";
 import { v4 as uuidv4 } from 'uuid';
 import { EDITING_BOOK_FIELD_GROUP } from "../constants/EDITING_BOOK_FIELD_GROUP.js";
-import Ratings from "../components/editingBook/Ratings.jsx";
-import AddQuoteForm from "../components/editingBook/AddQuoteForm.jsx";
+import EditingRatings from "../components/editingBook/EditingRatings.jsx";
+import AddQuoteFormDialog from "./AddQuoteFormDialog.jsx";
 import QuoteCard from "../components/editingBook/QuoteCard.jsx";
 import AddAvatar from "../components/AddAvatar.jsx";
 import { useNavigate, useParams } from "react-router-dom";
@@ -37,7 +37,7 @@ const INITIAL_FORM_BOOK = {
         rereadValue: 0,
     },
     statistics: {
-        status: "В процессе" | "Завершен" | "Заморожено" | "В планах",
+        status: "В планах",
         startDateOfReading: "",
         endDateOfReading: "",
         totalNumberOfPages: 0,
@@ -122,15 +122,17 @@ const EditingBook = () => {
     };
 
     return (
-        <Box backgroundColor = '#F8F4E3' padding="25px">
-            <Typography variant="h5" gutterBottom>
-                {id? "Изменение данных книги: " + [currentBook.title] :
-                    "Добавление новой книги"
-                }
-            </Typography>
+        <Box backgroundColor = '#E6CCB2' padding="25px">
+            <Box>
+                <Typography variant="h4" gutterBottom align="center" color="#7F5539">
+                    {id? "Изменение данных книги: " + [currentBook.title] :
+                        "Добавление новой книги"
+                    }
+                </Typography>
+            </Box>
 
             <Box display="flex" flexDirection="row">
-                <Box width="70%" padding="30px">
+                <Box width="70%" marginRight="30px">
                     {EDITING_BOOK_FIELD_GROUP.map((group, index) => (
                         <FieldEditingForm
                             key={index}
@@ -140,8 +142,6 @@ const EditingBook = () => {
                             handleMultiSelectChange={handleMultiSelectChange}
                         />
                     ))}
-
-                    <Ratings setFormData={setFormData} formData={formData} />
 
                     <Box mt={4}>
                         <Box
@@ -154,6 +154,10 @@ const EditingBook = () => {
                                 Персонажи ({formData.personages.length})
                             </Typography>
                             <Button
+                                sx={{
+                                    backgroundColor: '#7F5539',
+                                    color: '#FFFFFF',
+                                }}
                                 variant="contained"
                                 onClick={() => setIsAddPersonageOpen(true)}
                             >
@@ -184,6 +188,10 @@ const EditingBook = () => {
                                 Цитаты ({formData.quotes.length})
                             </Typography>
                             <Button
+                                sx={{
+                                backgroundColor: '#7F5539',
+                                color: '#FFFFFF',
+                            }}
                                 variant="contained"
                                 onClick={() => setIsAddQuoteOpen(true)}
                             >
@@ -214,7 +222,7 @@ const EditingBook = () => {
                         setFormData={setFormData}
                     />
 
-                    <AddQuoteForm
+                    <AddQuoteFormDialog
                     open={isAddQuoteOpen}
                     onClose={() => setIsAddQuoteOpen(false)}
                     setFormData={setFormData}
@@ -227,11 +235,22 @@ const EditingBook = () => {
                         <FieldEditingForm
                             key={index}
                             group={group}
-                            formData={formData}
-                            handleChange={handleChange}
+                            formData={formData.statistics}
+                            handleChange={(e) => {
+                                const { name, value } = e.target;
+                                setFormData(prev => ({
+                                    ...prev,
+                                    statistics: {
+                                        ...prev.statistics,
+                                        [name]: value // Просто обновляем поле в statistics
+                                    }
+                                }));
+                            }}
                             handleMultiSelectChange={handleMultiSelectChange}
                         />
                     ))}
+
+                    <EditingRatings setFormData={setFormData} formData={formData} />
 
                     <Box>
                     <AddAvatar
@@ -246,9 +265,12 @@ const EditingBook = () => {
 
             <Button
                 variant="contained"
-                sx={{ mt: 3 }}
                 fullWidth
                 onClick={handleSubmit}
+                sx={{
+                    backgroundColor: '#7F5539',
+                    color: '#FFFFFF',
+                }}
             >
                 {id? "Сохранить изменения" : "Добавить книгу"}
             </Button>

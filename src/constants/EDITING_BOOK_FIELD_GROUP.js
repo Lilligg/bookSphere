@@ -34,20 +34,74 @@ export const EDITING_BOOK_FIELD_GROUP = [
         title: "О книге",
         fields: [
             {
-                label: "О книге",
+                label: "Сюжет",
                 name: "about",
-                type: "text",
-            }
+                rows: 5,
+                type: "multiline",
+            },
+            {
+                label: "Об авторе",
+                name: "aboutAuthor",
+                rows: 5,
+                type: "multiline",
+            },
+        ]
+    },
+    {
+        title: "Для кого эта книга",
+        fields: [
+            {
+                label: "Идеальный читатель",
+                name: "perfectReader",
+                rows: 4,
+                type: "multiline",
+            },
+            {
+                label: "Кому не подойдет",
+                name: "whoDoesNotLove",
+                rows: 4,
+                type: "multiline",
+            },
         ]
     },
     {
         title: "Впечатления",
         fields: [
             {
-                label: "Впечатления",
+                label: "Эмоции",
                 name: "impressions",
-                type: "text",
-            }
+                rows: 4,
+                type: "multiline",
+            },
+            {
+                label: "Неожиданности",
+                name: "surprises",
+                rows: 4,
+                type: "multiline",
+            },
+            {
+                label: "Советы читателю",
+                name: "tipsForTheReader",
+                rows: 4,
+                type: "multiline",
+            },
+        ]
+    },
+    {
+        title: "Плюсы и минусы",
+        fields: [
+            {
+                label: "Достоинства произведения",
+                name: "advantages",
+                rows: 4,
+                type: "multiline",
+            },
+            {
+                label: "Недостатки произведения",
+                name: "disadvantages",
+                rows: 4,
+                type: "multiline",
+            },
         ]
     }
 ]

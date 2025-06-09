@@ -30,11 +30,17 @@ const ButtonSort = (props) => {
             {configuration.map((configuration, i) => (
                 <Box mb={3} key={i}>
                     <Typography variant="subtitle1" gutterBottom>
-                        {configuration.title}
+                        {configuration.title}:
                     </Typography>
                     <Button
                         fullWidth
-                        variant="outlined"
+                        variant="contained"
+                        sx={{
+                            color: "#E6CCB2",
+                            borderColor: "#7F5539", // Цвет границы как в вашей теме
+                            backgroundColor: sortConfig?.key === configuration.sortKey ? '#7F5539' : '#B08968',
+                            fontWeight: 600
+                        }}
                         onClick={() => handleSort(configuration.sortKey)}
                         endIcon={getSortIcon(configuration.sortKey)}
                     >

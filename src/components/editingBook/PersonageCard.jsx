@@ -1,30 +1,62 @@
-import { Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import malePersonage from "../../assets/malePersonage.png";
+import womanPersonage from "../../assets/womanPersonage.png";
 
-const PersonageCard = (props) => {
-    const { personage } = props;
+const PersonageCard = ({ personage = {}, onClick }) => {
+    const {
+        name = 'Неизвестный персонаж',
+        gender = '',
+        avatar = null,
+        characterStatus = 'Статус не указан'
+    } = personage;
 
     return (
-        <Grid item xs={12} sm={6} md={4}>
-            <Card sx={{ height: 'auto', width: '100%', margin:"10px"}}>
-                {personage.avatar && (
-                    <CardMedia
-                        component="img"
-                        height="200"
-                        image={personage.avatar}
-                        alt={personage.name}
-                    />
-                )}
-                <CardContent>
-                    <Typography variant="h6">{personage.name}</Typography>
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {personage.characterStatus}
+        <Box
+            onClick={onClick}
+            sx={{
+                display: 'flex',
+                height: '100%',
+                cursor: 'pointer',
+                borderRadius: 1,
+                overflow: 'hidden',
+                boxShadow: 1,
+                transition: 'transform 0.2s',
+                '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: 3
+                }
+            }}
+        >
+            <Box
+                component="img"
+                src={avatar || (gender === "male" ? malePersonage : womanPersonage)}
+                alt={name}
+                sx={{
+                    width: 120,
+                    height: 120,
+                    objectFit: 'cover',
+                    flexShrink: 0
+                }}
+            />
+            <Box sx={{ p: 2, flexGrow: 1 }}>
+                <Box display="flex" alignItems="center" flexDirection="row">
+                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                        {name}
                     </Typography>
-                    <Typography variant="body2" mt={1}>
-                        {personage.description}
+                    <Typography
+                            sx={{
+                                ml: 1,
+                                color: gender === "male" ? 'primary.main' : 'secondary.main'
+                            }}
+                        >
+                            {gender === "male" ? '♂' : '♀'}
                     </Typography>
-                </CardContent>
-            </Card>
-        </Grid>
+                </Box>
+                <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+                    {characterStatus}
+                </Typography>
+            </Box>
+        </Box>
     );
 };
 

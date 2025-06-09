@@ -1,18 +1,39 @@
-import { Card, CardContent, Typography, Box, Grid } from '@mui/material';
+import {Card, CardContent, Typography, Box, Grid, Divider} from '@mui/material';
+import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
+import PersonIcon from '@mui/icons-material/Person';
 
 const QuoteCard = (props) => {
     const { quotes } = props;
 
     return (
-        <Box>
-            <Card sx={{ height: 'auto', width: '100%', margin:"10px"}}>
-                <CardContent>
-                    <Typography variant="body1">{quotes.text}</Typography>
-                    <Typography variant="subtitle2" color="text.secondary">
-                        {quotes.person}
+        <Box
+            sx={{
+                display: 'flex',
+                height: '100%',
+                flexDirection: 'column',
+                marginTop: "20px"
+            }}
+        >
+                    <Typography
+                        variant="h6"
+                        color= 'text.primary'
+                    >
+                       <FormatQuoteIcon/> {quotes.text}
                     </Typography>
-                </CardContent>
-            </Card>
+
+                    <Box textAlign= 'right' display="flex" flexDirection="row" alignItems="center" justifyContent="flex-end">
+                        <PersonIcon fontSize="medium"/>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                textAlign: 'right',
+                                color: 'text.secondary',
+                            }}>
+                            {quotes.person}
+                        </Typography>
+                    </Box>
+        <Divider sx={{ marginTop: '15px' }}/>
+
         </Box>
     );
 };

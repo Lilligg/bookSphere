@@ -1,27 +1,27 @@
 export const SORT_BUTTON_GROUP = [
     {
-        label: "По названию",
+        title: "По названию",
         sortKey: "title",
-        defaultText: "А-Я",
+        defaultText: "Название",
         ascText: "А → Я",
         descText: "Я → А"
     },
     {
-        label: "По автору",
+        title: "По автору",
         sortKey: "author",
-        defaultText: "А-Я",
+        defaultText: "Автор",
         ascText: "А → Я",
         descText: "Я → А"
     },
     {
-        label: "По году издания",
+        title: "По году издания",
         sortKey: "yearPublication",
         defaultText: "Год",
         ascText: "Старые → Новые",
         descText: "Новые → Старые"
     },
     {
-        label: "По рейтингу",
+        title: "По рейтингу",
         sortKey: "overallRating",
         defaultText: "Рейтинг",
         ascText: "Низкий → Высокий",

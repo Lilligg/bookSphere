@@ -47,6 +47,23 @@ export const EDITING_PROFILE_FIELD_GROUPS = [
         ]
     },
     {
+        title: "Любимая цитата",
+        fields: [
+            {
+                label: "Цитата",
+                name: "loveQuote",
+                type: "multiline",
+                rows: 4,
+                placeholder: "Напишите текст вашей любимой цитаты, она будет отображаться в профиле"
+            },
+            {
+                label: "Автор цитаты",
+                name: "authorLoveQuote",
+                type: "text"
+            },
+        ]
+    },
+    {
         title: "Литературные предпочтения",
         fields: [
             {
@@ -64,18 +81,21 @@ export const EDITING_PROFILE_FIELD_GROUPS = [
             {
                 label: "Любимые авторы",
                 name: "favoriteAuthors",
-                type: "text",
+                type: "multiline",
+                rows: 2,
                 placeholder: "Перечислите через запятую"
             },
             {
                 label: "Самая перечитываемая книга",
                 name: "favoriteRereadBook",
-                type: "text"
+                type: "multiline",
+                rows: 2,
             },
             {
                 label: "Книга, которая разочаровала",
                 name: "disappointingBook",
-                type: "text"
+                type: "multiline",
+                rows: 2,
             },
             {
                 label: "Формат чтения",
@@ -86,7 +106,8 @@ export const EDITING_PROFILE_FIELD_GROUPS = [
             {
                 label: "Любимая книжная серия",
                 name: "favoriteBookSeries",
-                type: "text"
+                type: "multiline",
+                rows: 2,
             },
             {
                 label: "Языки чтения",
@@ -113,5 +134,6 @@ export const EDITING_PROFILE_FIELD_GROUPS = [
                 options: READING_PLACES_OPTIONS
             },
         ]
+
     }
 ];

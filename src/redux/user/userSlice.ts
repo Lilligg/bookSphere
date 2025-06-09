@@ -10,6 +10,10 @@ interface IUser {
     gender: string;
     city: string;
     aboutYourself: string;
+
+    loveQuote: string;
+    authorLoveQuote: string;
+
     favoriteGenres: [];
     unlovedGenres: [];
     favoriteAuthors: string;

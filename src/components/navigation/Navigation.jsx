@@ -20,7 +20,7 @@ const Navigation = () => {
     );
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: '#262526' }}>
+        <AppBar position="static" sx={{ backgroundColor: '#7F5539' }}>
             <Toolbar sx={{
                 maxWidth: 1200,
                 width: '100%',
