@@ -46,16 +46,17 @@ const UserMenu = () => {
                 open={open}
                 onClose={handleClose}
             >
-                {USER_MENU.map((item) => (
+                {USER_MENU.map((item, index) => (
                     <MenuItem
                         component={Link}
                         to={item.link}
                         onClick={handleClose}
+                        key={`user-menu-${index}`}
                     >
                         {item.label}
                     </MenuItem>))
                 }
-                <MenuItem onClick={logoutClick}>Выйти</MenuItem>
+                <MenuItem onClick={logoutClick} key = "UserMenuExit">Выйти</MenuItem>
             </Menu>
         </Box>
     );

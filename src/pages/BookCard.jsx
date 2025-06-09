@@ -1,16 +1,16 @@
-import {Box, Typography} from "@mui/material";
-import TabBook from "../components/bookCard/TabBook.jsx";
+import { Box } from "@mui/material";
 import BookInfo from "../components/bookCard/BookInfo.jsx";
-import {useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
-import {setCurrentBookById} from "../redux/book/bookSlice.js";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { setCurrentBookById } from "../redux/book/bookSlice.js";
+import CustomTabs from "../components/CustomTabs.jsx";
+import { BOOK_TABS } from "../constants/bookCard/BOOK_TABS.jsx";
 
 const BookCard = () => {
     const { id } = useParams();
     const dispatch = useDispatch();
     const currentBook = useSelector((state) => state.book.currentBook);
-
 
     useEffect(() => {
         if (id) {
@@ -23,16 +23,19 @@ const BookCard = () => {
     }
 
     return (
-        <Box padding="25px">
+        <Box marginTop="25px">
             <BookInfo currentBook={currentBook}/>
-            <Box backgroundColor = '#D4D4D4' display="flex" flexDirection="row" sx={{opacity:"0.97", marginTop: "50px"}}>
-                <Box>
-                    <TabBook currentBook={currentBook}/>
-                </Box>
-                <Box width="40%" marginTop="20px">
-                    <Typography variant="body1" align="center">
-                       Статус: {}
-                    </Typography>
+
+            <Box
+                display="flex"
+                flexDirection="row"
+                sx={{
+                    marginTop: '40px',
+                    backgroundColor: '#E6CCB2'
+                }}
+            >
+                <Box width="100%">
+                    <CustomTabs data = {BOOK_TABS(currentBook)}/>
                 </Box>
             </Box>
         </Box>

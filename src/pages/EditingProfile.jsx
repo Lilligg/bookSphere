@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../redux/user/userSlice.ts";
 import FieldEditingForm from "../components/FieldEditingForm.jsx";
-import { EDITING_PROFILE_FIELD_GROUPS } from "../constants/EDITING_PROFILE_FIELD_GROUPS.js";
+import { EDITING_PROFILE_FIELD_GROUPS } from "../constants/editingProfile/EDITING_PROFILE_FIELD_GROUPS.js";
 import AddAvatar from "../components/AddAvatar.jsx";
 
 const INITIAL_FORM_USER = {
@@ -12,6 +12,8 @@ const INITIAL_FORM_USER = {
     dateOfBirth: "",
     gender: "",
     aboutYourself: "",
+    loveQuote: "",
+    authorLoveQuote: "",
     favoriteGenres: [],
     unlovedGenres: [],
     favoriteAuthors: "",
@@ -63,7 +65,7 @@ const EditingProfile = () => {
     };
 
     return (
-        <Box sx={{ width: "100%", mx: 'auto', p: 3, backgroundColor: '#F8F4E3'}}>
+        <Box sx={{ width: "100%", mx: 'auto', p: 3, backgroundColor: '#E6CCB2', borderRadius: '15px' }}>
             <Typography variant="h4" align="center">
                 Редактирование профиля
             </Typography>
@@ -81,19 +83,21 @@ const EditingProfile = () => {
             ))}
 
             </Box>
-            <AddAvatar
-                title = "Аватар Пользователя"
-                type = "typeUser"
-            />
+            <Box display="flex" justifyContent="center" sx={{ width: "30%"}}>
+                <AddAvatar
+                    title = "Аватар Пользователя"
+                    type = "typeUser"
+                />
+            </Box>
         </Box>
-
-
             <Button
-                type="submit"
                 variant="contained"
-                sx={{ mt: 3 }}
                 fullWidth
                 onClick={handleSubmit}
+                sx={{
+                    backgroundColor: '#7F5539',
+                    color: '#FFFFFF',
+                }}
             >
                 Сохранить изменения
             </Button>

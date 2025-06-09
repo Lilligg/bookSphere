@@ -1,8 +1,9 @@
-import RatingTabs from "../../components/bookCard/RatingTabs.jsx";
-import AboutTabs from "../../components/bookCard/AboutTabs.jsx";
-import PersonagesTabs from "../../components/bookCard/PersonagesTabs.jsx";
-import QuoteTabs from "../../components/bookCard/QuoteTabs.jsx";
-import ImpressionsTabs from "../../components/bookCard/ImpressionsTabs.jsx";
+import RatingTabs from "../../components/bookCard/tabsBook/RatingTabs.jsx";
+import AboutTabs from "../../components/bookCard/tabsBook/AboutTabs.jsx";
+import PersonagesTabs from "../../components/bookCard/tabsBook/PersonagesTabs.jsx";
+import QuoteTabs from "../../components/bookCard/tabsBook/QuoteTabs.jsx";
+import ImpressionsTabs from "../../components/bookCard/tabsBook/ImpressionsTabs.jsx";
+import StatisticTabs from "../../components/bookCard/tabsBook/StatisticTabs.jsx";
 
 export const BOOK_TABS = (currentBook) => [
     {
@@ -29,5 +30,10 @@ export const BOOK_TABS = (currentBook) => [
         value: "5",
         label: "Оценка",
         content: <RatingTabs currentBook = {currentBook}/>
+    },
+    {
+        value: "6",
+        label: "Статистика",
+        content: <StatisticTabs currentBook = {currentBook}/>
     }
 ]

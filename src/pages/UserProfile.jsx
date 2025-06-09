@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import LeftProfileTab from "../components/userProfile/LeftProfileTab.jsx";
-import RightProfile from "../components/userProfile/RightProfile.jsx";
+import InformationUser from "../components/userProfile/InformationUser.jsx";
+import PersonalInformation from "../components/userProfile/PersonalInformation.jsx";
 
 const UserProfile = () => {
 
     return (
         <Box display="flex" flexDirection= "column">
-            <RightProfile/>
-            <LeftProfileTab/>
+            <PersonalInformation/>
+            <InformationUser/>
         </Box>
     )
 }

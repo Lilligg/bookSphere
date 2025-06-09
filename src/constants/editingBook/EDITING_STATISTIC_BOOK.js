@@ -1,4 +1,3 @@
-import {GENRE_OPTIONS} from "./FIELD_OPTIONS.js";
 
 export const EDITING_STATISTIC_BOOK = [
     {
@@ -6,7 +5,7 @@ export const EDITING_STATISTIC_BOOK = [
         fields: [
             {
                 label: "Статус чтения",
-                name: "statistic: status",
+                name: "status",
                 type: "select",
                 options: [
                     { value: "В процессе", label: "В процессе" },
@@ -17,7 +16,7 @@ export const EDITING_STATISTIC_BOOK = [
             },
             {
                 label: "Дата начала чтения",
-                name: "statistic: startDateOfReading",
+                name: "startDateOfReading",
                 type: "date",
                 inputProps: {
                     max: new Date().toISOString().split('T')[0]
@@ -25,7 +24,7 @@ export const EDITING_STATISTIC_BOOK = [
             },
             {
                 label: "Дата окончания чтения",
-                name: "statistic: endDateOfReading",
+                name: "endDateOfReading",
                 type: "date",
                 inputProps: {
                     max: new Date().toISOString().split('T')[0]
@@ -33,12 +32,12 @@ export const EDITING_STATISTIC_BOOK = [
             },
             {
                 label: "Количество страниц в книге",
-                name: "statistic: totalNumberOfPages",
+                name: "totalNumberOfPages",
                 type: "text",
             },
             {
                 label: "Количество прочитанных страниц",
-                name: "statistic: numberOfPagesRead",
+                name: "numberOfPagesRead",
                 type: "text",
             },
         ]

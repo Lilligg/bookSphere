@@ -1,3 +1,5 @@
+import {GENDER_OPTIONS, STATUS_PERSONAGES} from "../FIELD_OPTIONS.js";
+
 export const PERSONAGE_FORM_FIELD_GROUP = [
     {
         title: "Основная информация",
@@ -11,22 +13,38 @@ export const PERSONAGE_FORM_FIELD_GROUP = [
             {
                 label: "Статус персонажа",
                 name: "characterStatus",
-                type: "text",
+                type: "select",
+                options: STATUS_PERSONAGES
+            },
+            {
+                label: "Пол персонажа",
+                name: "gender",
+                type: "select",
+                options: GENDER_OPTIONS
             },
             {
                 label: "Внешность",
                 name: "appearance",
-                type: "text",
+                rows: 4,
+                type: "multiline",
             },
             {
                 label: "Характер",
                 name: "character",
-                type: "text",
+                rows: 4,
+                type: "multiline",
             },
             {
                 label: "Описание",
                 name: "description",
-                type: "text",
+                rows: 4,
+                type: "multiline",
+            },
+            {
+                label: "Влияние на историю",
+                name: "effectOnStory",
+                rows: 4,
+                type: "multiline",
             },
         ]
     }
