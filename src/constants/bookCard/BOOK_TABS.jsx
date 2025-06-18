@@ -31,9 +31,4 @@ export const BOOK_TABS = (currentBook) => [
         label: "Оценка",
         content: <RatingTabs currentBook = {currentBook}/>
     },
-    {
-        value: "6",
-        label: "Статистика",
-        content: <StatisticTabs currentBook = {currentBook}/>
-    }
 ]
