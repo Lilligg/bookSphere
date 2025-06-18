@@ -1,6 +1,6 @@
 import {
     AppBar,
-    Box, Button,
+    Box, Button, Stack,
     Toolbar,
     Typography
 } from "@mui/material";
@@ -30,11 +30,28 @@ const Navigation = () => {
                     component="img"
                     src={logo}
                     alt="Логотип"
-                    sx={{ width: 30, height: 'auto', mr: 2 }}
+                    sx={{ width: 40, height: 'auto', mr: 1}}
                 />
                 <Typography variant="h5">
                     BookSphere
                 </Typography>
+
+                <Stack direction="row" spacing={3} marginLeft="60px">
+                    <Box
+                        component={Link}
+                        to="/HomePage"
+                        sx={{ textDecoration: "none" }}
+                    >
+                        <Typography variant="h6" color="#e3d5ca">Главная</Typography>
+                    </Box>
+                    <Box
+                        component={Link}
+                        to="/ListBooks"
+                        sx={{ textDecoration: "none" }}
+                    >
+                        <Typography variant="h6" color="#e3d5ca">Моя библиотека</Typography>
+                    </Box>
+                </Stack>
 
                 <Box sx={{ ml: 'auto', display: 'flex', gap: 2 }}>
                     {isAuth ? <UserMenu/> : renderAuthButtons()}

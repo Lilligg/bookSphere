@@ -16,7 +16,7 @@ import AddBookInCollectionDialog from "../pages/AddBookInCollectionDialog.jsx";
 import {useDispatch} from "react-redux";
 import {removeBook} from "../redux/book/bookSlice.js";
 
-const ItemBook = (props) => {
+const MiniBookCard = (props) => {
     const { book } = props;
     const dispatch = useDispatch();
 
@@ -239,4 +239,4 @@ const ItemBook = (props) => {
     );
 };
 
-export default ItemBook;
+export default MiniBookCard;

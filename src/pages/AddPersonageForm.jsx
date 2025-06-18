@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Stack } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { PERSONAGE_FORM_FIELD_GROUP } from "../constants/editingBook/PERSONAGE_FORM_FIELD_GROUP.js";
 import FieldEditingForm from "../components/FieldEditingForm.jsx";
 import AddAvatar from "../components/AddAvatar.jsx";
+import {useDispatch} from "react-redux";
+import { updatePersonage } from "../redux/book/bookSlice.js";
 
 const INITIAL_FORM_PERSONAGE = {
     id: "",
@@ -17,8 +19,18 @@ const INITIAL_FORM_PERSONAGE = {
 }
 
 const AddPersonageForm = (props) => {
-    const { setFormData, open, onClose } = props;
+    const { setFormData, open, onClose, currentPersonage, bookID } = props;
     const [personage, setPersonage] = useState(INITIAL_FORM_PERSONAGE);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (open) {
+            setPersonage(currentPersonage
+                ? { ...INITIAL_FORM_PERSONAGE, ...currentPersonage }
+                : INITIAL_FORM_PERSONAGE
+            );
+        }
+    }, [open, currentPersonage]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -33,18 +45,28 @@ const AddPersonageForm = (props) => {
     }
 
     const handleSubmit = () => {
-        const newPersonage = {
+        if (currentPersonage) {
+            const newPersonage = {
             ...personage,
-            id: uuidv4()
+
         };
+            dispatch(updatePersonage({bookID, newPersonage, personageId: currentPersonage.id}))
+            onClose();
+        }
+        else {
+            const newPersonage = {
+                ...personage,
+                id: uuidv4()
+            };
 
-        onClose();
-        setFormData(prev => ({
-            ...prev,
-            personages: [...prev.personages, newPersonage]
-        }));
+            onClose();
+            setFormData(prev => ({
+                ...prev,
+                personages: [...prev.personages, newPersonage]
+            }));
 
-        setPersonage(INITIAL_FORM_PERSONAGE)
+            setPersonage(INITIAL_FORM_PERSONAGE)
+        }
     };
 
     return (
@@ -61,7 +83,8 @@ const AddPersonageForm = (props) => {
                     background: "#E6CCB2",
                 }}
             >
-                Добавить нового персонажа
+                {currentPersonage ? `Изменить персонажа ${currentPersonage.name}` :
+                    "Добавить нового персонажа"}
             </DialogTitle>
 
             <DialogContent

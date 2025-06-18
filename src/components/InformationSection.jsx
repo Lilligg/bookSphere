@@ -1,18 +1,18 @@
 import {Box, Typography} from "@mui/material";
 
-const BookSection = ({
+const InformationSection = ({
                          title,
                          content,
                          variant = "h5",
                          marginTop,
-                         icon // новая пропса для иконки
+                         icon
                      }) => {
     return (
         <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, mt: marginTop }}>
             {icon && (
                 <Box sx={{
                     color: '#040404',
-                    mt: variant === 'h5' ? 0.5 : 0.3 // выравнивание для разных размеров
+                    mt: variant === 'h5' ? 0.5 : 0.3
                 }}>
                     {icon}
                 </Box>
@@ -29,4 +29,4 @@ const BookSection = ({
     );
 };
 
-export default BookSection;
+export default InformationSection;

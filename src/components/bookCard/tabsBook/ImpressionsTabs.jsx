@@ -6,7 +6,7 @@ import {
     ThumbDown,
     Compare,
 } from '@mui/icons-material';
-import BookSection from "../../BookSection.jsx";
+import InformationSection from "../../InformationSection.jsx";
 import AirIcon from '@mui/icons-material/Air';
 
 const ImpressionsTabs = (props) => {
@@ -14,14 +14,14 @@ const ImpressionsTabs = (props) => {
 
     return (
         <Box sx={{ padding: "6px" }}>
-            <BookSection
+            <InformationSection
                 title="Эмоции"
                 content={currentBook.impressions}
                 icon={<SentimentSatisfiedAlt fontSize="medium" />}
                 variant="h6"
             />
 
-            <BookSection
+            <InformationSection
                 title="Неожиданности"
                 content={currentBook.surprises}
                 icon={<AirIcon fontSize="medium" />}
@@ -29,7 +29,7 @@ const ImpressionsTabs = (props) => {
                 marginTop="15px"
             />
 
-            <BookSection
+            <InformationSection
                 title="Советы читателю"
                 content={currentBook.tipsForTheReader}
                 icon={<Lightbulb fontSize="medium" />}
@@ -42,7 +42,7 @@ const ImpressionsTabs = (props) => {
                 <Typography variant="h5">Плюсы и минусы работы</Typography>
             </Box>
 
-            <BookSection
+            <InformationSection
                 title="Плюсы"
                 content={currentBook.advantages}
                 icon={<ThumbUp fontSize="small" color="success" />}
@@ -50,7 +50,7 @@ const ImpressionsTabs = (props) => {
                 marginTop="10px"
             />
 
-            <BookSection
+            <InformationSection
                 title="Минусы"
                 content={currentBook.disadvantages}
                 icon={<ThumbDown fontSize="small" color="error" />}

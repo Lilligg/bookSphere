@@ -1,4 +1,4 @@
-import {GENDER_OPTIONS, STATUS_PERSONAGES} from "../FIELD_OPTIONS.js";
+import { STATUS_PERSONAGES } from "../FIELD_OPTIONS.js";
 
 export const PERSONAGE_FORM_FIELD_GROUP = [
     {
@@ -20,7 +20,15 @@ export const PERSONAGE_FORM_FIELD_GROUP = [
                 label: "Пол персонажа",
                 name: "gender",
                 type: "select",
-                options: GENDER_OPTIONS
+                options: [
+                    {value: "female", label: "Женский"},
+                    {value: "male", label: "Мужской"}
+                ]
+            },
+            {
+                label: "Возраст",
+                name: "age",
+                type: "text",
             },
             {
                 label: "Внешность",

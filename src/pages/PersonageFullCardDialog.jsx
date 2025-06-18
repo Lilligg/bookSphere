@@ -1,125 +1,167 @@
-import { Box, Dialog, Typography, IconButton } from "@mui/material";
+import {Box, Dialog, Typography, IconButton, Stack, Divider, DialogTitle, DialogContent} from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import malePersonage from "../assets/malePersonage.png";
 import womanPersonage from "../assets/womanPersonage.png";
-import { useEffect } from "react";
+import {useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentPersonageById } from "../redux/book/bookSlice.ts";
-import {Link} from "react-router-dom";
+import { setCurrentPersonageById, removePersonage } from "../redux/book/bookSlice.ts";
 import EditIcon from "@mui/icons-material/Edit";
+import InformationSection from "../components/InformationSection.jsx";
+import {PERSONAGE_FULL_INFO} from "../constants/bookCard/PERSONAGE_FULL_INFO.jsx";
+import CakeIcon from "@mui/icons-material/Cake";
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
+import AddPersonageForm from "./AddPersonageForm.jsx";
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const PersonageFullCardDialog = ({ open, onClose, idPersonage, idBook }) => {
     const dispatch = useDispatch();
-    const currentPersonage = useSelector(state => state.book.currentPersonage);
+    const {currentPersonage} = useSelector(state => state.book);
+
+    const [openEdit, setOpenEdit] = useState(false);
 
     useEffect(() => {
         if (open && idPersonage) {
             dispatch(setCurrentPersonageById({ idPersonage, idBook }));
         }
-    }, [open, idPersonage, idBook, dispatch]);
+    }, [idPersonage, idBook, dispatch, open]);
 
-    if (!currentPersonage) return null;
 
-    const {
-        name = 'Неизвестный персонаж',
-        gender = '',
-        avatar = null,
-        characterStatus = 'Статус не указан',
-        lifeStatus = 'Статус не указан',
-        description = 'Описание отсутствует',
-        appearance = 'Описание отсутствует',
-        character = 'Описание отсутствует',
-        effectOnStory = 'Описание отсутствует',
-    } = currentPersonage;
+    if (!currentPersonage) {return null}
+
+    const openEditPersonage = () => {
+        setOpenEdit(true);
+    }
+
+    const handleCloseEdit = () => {
+        setOpenEdit(false);
+        if (idPersonage) {
+            dispatch(setCurrentPersonageById({ personageId: idPersonage, bookId: idBook }));
+        }
+    };
+
+    const deletePersonage = () => {
+
+        dispatch(removePersonage({bookId: idBook, personageId:idPersonage }));
+        alert("Персонаж успешно удален")
+        onClose()
+    }
 
     return (
-        <Dialog open={open} onClose={onClose} >
-            <Box position="relative" padding="10px">
-
-                <Box sx={{ position: 'absolute', right: 8, top: 8 }}>
-                    <IconButton
-                        component={Link}
-                        to={`/EditingBooks/`}
-                    >
-                        <EditIcon/>
-                    </IconButton>
-                    <IconButton
-                        onClick={onClose}
-
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </Box>
-
-                <Box display="flex" flexDirection="column">
-                    <Box display="flex" flexDirection="row">
-                        <Box display="flex" flexDirection="column">
-                            <Box display="flex" flexDirection="row" >
-                                <Typography variant="h4">
-                                    {name}
-                                </Typography>
-                                <Typography
-                                    variant="h4"
-                                    sx={{
-                                        ml: 1,
-                                        color: gender === "male" ? 'primary.main' : 'secondary.main'
-                                    }}
-                                >
-                                    {gender === "male" ? '♂' : '♀'}
-                                </Typography>
-                            </Box>
-                            <Typography variant="subtitle1">
-                                Статус персонажа: {characterStatus}
-                            </Typography>
-                            <Typography variant="subtitle1">
-                                Жизненный статус: {lifeStatus}
-                            </Typography>
-                        </Box>
-
-                        <Box
-                            component="img"
-                            src={avatar || (gender === "male" ? malePersonage : womanPersonage)}
-                            alt={name}
+        <>
+        <Dialog
+            open={open}
+            onClose={onClose}
+            maxWidth="sm"
+            fullWidth
+            disableEnforceFocus
+        >
+            <DialogTitle>
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                >
+                    <Stack direction="row" >
+                        <Typography variant="h4">{currentPersonage.name}</Typography>
+                        <Typography
+                            variant="h4"
                             sx={{
-                                width: '200px',
-                                height: '200px',
+                                ml: 1,
+                                color: currentPersonage.gender === "male" ? '#0f97ff' : '#e43473'
                             }}
-                        />
-                    </Box>
+                        >
+                            {currentPersonage.gender === "male" ? <MaleIcon/> : <FemaleIcon/>}
+                        </Typography>
+                    </Stack>
 
                     <Box>
-
-                        <Typography variant="h6">
-                            Внешность:
-                        </Typography>
-                        <Typography variant="body1">
-                            {appearance}
-                        </Typography>
-
-                        <Typography variant="h6">
-                            Характер:
-                        </Typography>
-                        <Typography variant="body1">
-                            {character}
-                        </Typography>
-
-                        <Typography variant="h6">
-                            Отношения с другими персонажами:
-                        </Typography>
-                        <Typography variant="body1">
-                            {description}
-                        </Typography>
-
-                        <Typography variant="h6">
-                            Влияние на сюжет
-                        </Typography>
-                        <Typography variant="body1">
-                            {effectOnStory}
-                        </Typography>
+                        <IconButton
+                            onClick={openEditPersonage}
+                        >
+                            <EditIcon />
+                        </IconButton>
+                        <IconButton
+                            onClick={deletePersonage}
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        <IconButton
+                            onClick={onClose}
+                        >
+                            <CloseIcon />
+                        </IconButton>
                     </Box>
-                </Box>
-            </Box>
+                </Stack>
+            </DialogTitle>
+
+            <DialogContent dividers>
+                <Stack spacing={3}>
+                    {/* Основная информация */}
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={2}
+                        alignItems="flex-start"
+                    >
+                        <Stack spacing={2} sx={{ flex: 1 }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <CakeIcon sx={{ color: 'action.active', mr: 1.5 }} />
+                                <Typography>
+                                    <strong>Статус:</strong> {currentPersonage.characterStatus}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <CakeIcon sx={{ color: 'action.active', mr: 1.5 }} />
+                                <Typography>
+                                    <strong>Жизненный статус:</strong> {currentPersonage.lifeStatus}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                <CakeIcon sx={{ color: 'action.active', mr: 1.5 }} />
+                                <Typography>
+                                    <strong>Возраст:</strong> {currentPersonage.age}
+                                </Typography>
+                            </Box>
+                        </Stack>
+                        <Box
+                            component="img"
+                            src={currentPersonage.avatar || (currentPersonage.gender === "male" ? malePersonage : womanPersonage)}
+                            alt={currentPersonage.name}
+                            sx={{
+                                width: 200,
+                                height: 200,
+                                borderRadius: 4,
+                                objectFit: 'cover',
+                                alignSelf: { xs: 'center', sm: 'flex-start' }
+                            }}
+                        />
+                    </Stack>
+
+                    <Divider />
+
+                    {/* Детальная информация */}
+                    <Stack spacing={2}>
+                        {PERSONAGE_FULL_INFO.map((position) => (
+                            <InformationSection
+                                key={position.title}
+                                title={position.title}
+                                content={currentPersonage[position.content]}
+                                icon={position.icon}
+                            />
+                        ))}
+                    </Stack>
+                </Stack>
+            </DialogContent>
         </Dialog>
+
+        <AddPersonageForm
+            open={openEdit}
+            onClose={handleCloseEdit}
+            currentPersonage={currentPersonage}
+            bookID={idBook}
+        />
+
+        </>
     );
 };
 

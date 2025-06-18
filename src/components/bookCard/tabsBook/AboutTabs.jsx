@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import BookSection from "../../BookSection.jsx";
+import InformationSection from "../../InformationSection.jsx";
 import {
     MenuBook,
     Person,
@@ -13,13 +13,13 @@ const AboutTabs = (props) => {
 
     return (
         <Box sx={{ padding: "6px" }}>
-            <BookSection
+            <InformationSection
                 title="Сюжет"
                 content={currentBook.about}
                 icon={<MenuBook fontSize="medium" />}
             />
 
-            <BookSection
+            <InformationSection
                 title="Об авторе"
                 content={currentBook.aboutAuthor}
                 marginTop="15px"
@@ -30,14 +30,14 @@ const AboutTabs = (props) => {
                 <Group fontSize="medium" /> Для кого эта книга
             </Typography>
 
-            <BookSection
+            <InformationSection
                 title="Идеальный читатель"
                 content={currentBook.perfectReader}
                 variant="h6"
                 icon={<Mood fontSize="small" />}
             />
 
-            <BookSection
+            <InformationSection
                 title="Кому не подойдет"
                 content={currentBook.whoDoesNotLove}
                 variant="h6"

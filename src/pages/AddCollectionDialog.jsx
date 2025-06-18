@@ -1,33 +1,57 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField} from "@mui/material";
-import {useState} from "react";
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@mui/material";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import {useDispatch} from "react-redux";
-import { addCollection } from "../redux/book/bookSlice.js";
+import { useDispatch } from "react-redux";
+import { addCollection, updateCollection } from "../redux/book/bookSlice.js";
 
-const AddCollectionDialog = (props) => {
-    const { open, setOpen } = props
+const AddCollectionDialog = ({ open, setOpen, collectionToEdit }) => {
     const dispatch = useDispatch();
-    const [collection, setCollection] = useState(
-        {
-            id: null,
-            name: "",
-            bookIds: []
+    const [collection, setCollection] = useState({
+        id: null,
+        name: "",
+        bookIds: []
+    });
+
+    useEffect(() => {
+        if (collectionToEdit) {
+            setCollection(collectionToEdit);
+        } else {
+            setCollection({
+                id: null,
+                name: "",
+                bookIds: []
+            });
         }
-    );
+    }, [collectionToEdit, open]);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const saveCollection = () => {
-        const newCollection = {
-            ...collection,
-            id: uuidv4()
+        if (!collection.name.trim()) {
+            return;
         }
 
-        dispatch(addCollection(newCollection));
-        setOpen(false)
-    }
-    
+        if (collectionToEdit) {
+            dispatch(updateCollection({
+                id: collectionToEdit.id,
+                name: collection.name,
+            }));
+        } else {
+            dispatch(addCollection({
+                ...collection,
+                id: uuidv4()
+            }));
+        }
+
+        handleClose();
+    };
+
     return (
         <Dialog
             open={open}
+            onClose={handleClose}
             maxWidth="sm"
             fullWidth
         >
@@ -39,53 +63,61 @@ const AddCollectionDialog = (props) => {
                     background: "#E6CCB2",
                 }}
             >
-                Добавить новую коллекцию
+                {collectionToEdit ? "Редактировать коллекцию" : "Добавить новую коллекцию"}
             </DialogTitle>
-            <DialogContent  sx={{background: "#E6CCB2"}}>
+            <DialogContent sx={{ background: "#E6CCB2", pt: 3 }}>
                 <TextField
-                    sx={{width: "100%"}}
+                    fullWidth
                     variant="outlined"
-                    label={"Имя"}
+                    label="Название коллекции"
                     value={collection.name}
-                    onChange={(e) =>
-                        setCollection({
-                            ...collection,
-                            name: e.target.value
-                        })
-                    }
+                    onChange={(e) => setCollection({
+                        ...collection,
+                        name: e.target.value
+                    })}
+                    sx={{ mb: 2 }}
                 />
             </DialogContent>
             <DialogActions
                 sx={{
                     background: "#E6CCB2",
                     display: "flex",
-                    justifyContent: "center"
+                    justifyContent: "center",
+                    gap: 2,
+                    p: 3
                 }}
             >
                 <Button
-                    onClick={saveCollection}
-                    variant="contained"
-                    sx={{
-                        backgroundColor: '#7F5539',
-                        color: '#FFFFFF',
-                        width: '30%',
-                    }}
-                >
-                    Создать
-                </Button>
-
+                onClick={saveCollection}
+                variant="contained"
+                sx={{
+                    backgroundColor: '#7F5539',
+                    color: '#FFFFFF',
+                    width: '30%',
+                    '&:hover': {
+                        backgroundColor: '#5d3d28',
+                    }
+                }}
+            >
+                {collectionToEdit ? "Сохранить" : "Создать"}
+            </Button>
                 <Button
-                    onClick={() => setOpen(false)}
+                    onClick={handleClose}
+                    variant="outlined"
                     sx={{
-                        backgroundColor: '#7F5539',
-                        color: '#FFFFFF',
+                        borderColor: '#7F5539',
+                        color: '#7F5539',
                         width: '30%',
+                        '&:hover': {
+                            borderColor: '#5d3d28',
+                        }
                     }}
                 >
                     Отменить
                 </Button>
             </DialogActions>
         </Dialog>
-    )
-}
-export default AddCollectionDialog
+    );
+};
+
+export default AddCollectionDialog;

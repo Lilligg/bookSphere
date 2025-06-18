@@ -5,8 +5,9 @@ interface IPersonage {
     name: string;
     avatar: string | null;
     gender?: string;
+    age: number;
     characterStatus: "Главный герой" | "Антагонист" | "Второстепенный персонаж" | "Эпизодический персонаж";
-    lifeStatus?: string;
+    lifeStatus?: "Жив" | "Мертв";
     appearance?: string;
     character?: string;
     description?: string;
@@ -109,12 +110,7 @@ const bookSlice = createSlice({
     name: 'book',
     initialState,
     reducers: {
-        setBooks: (state, action: PayloadAction<IBook[]>) => {
-            state.books = action.payload;
-        },
-
     //Операции с книгами
-
         addBook: (state, action: PayloadAction<IBook>) => {
             state.books.push(action.payload);
             state.lastUpdated = Date.now();
@@ -177,31 +173,55 @@ const bookSlice = createSlice({
 
     //Операции с персонажами
 
-        addPersonage: (state, action: PayloadAction<{ bookId: string; personage: IPersonage }>) => {
-            const book = state.books.find(b => b.id === action.payload.bookId);
+        updatePersonage: (state, action: PayloadAction<{
+            bookID: string;
+            personageId: string;
+            newPersonage: IPersonage
+        }>) => {
+            const { bookID, personageId, newPersonage } = action.payload;
 
-            if (book) {
-                book.personages.push(action.payload.personage);
+            const bookIndex = state.books.findIndex(b => b.id === bookID);
+            if (bookIndex !== -1) {
+                const personageIndex = state.books[bookIndex].personages?.findIndex(
+                    p => p.id === personageId
+                ) ?? -1;
 
-                if (state.currentBook?.id === action.payload.bookId) {
-                    state.currentBook.personages.push(action.payload.personage);
+                if (personageIndex !== -1) {
+                    const currentAvatar = state.books[bookIndex].personages[personageIndex].avatar;
+                    const avatarToKeep = newPersonage.avatar === null ? currentAvatar : newPersonage.avatar;
+
+                    state.books[bookIndex].personages[personageIndex] = {
+                        ...newPersonage,
+                        avatar: avatarToKeep,
+                        id: personageId
+                    };
                 }
             }
-        },
 
-        updatePersonage: (state, action: PayloadAction<{ bookId: string; personage: IPersonage }>) => {
-            const book = state.books.find(b => b.id === action.payload.bookId);
+            if (state.currentBook?.id === bookID) {
+                const personageIndex = state.currentBook.personages?.findIndex(
+                    p => p.id === personageId
+                ) ?? -1;
 
-            if (book) {
-                const index = book.personages.findIndex(p => p.id === action.payload.personage.id);
+                if (personageIndex !== -1) {
+                    const currentAvatar = state.currentBook.personages[personageIndex].avatar;
+                    const avatarToKeep = newPersonage.avatar === null ? currentAvatar : newPersonage.avatar;
 
-                if (index !== -1) {
-                    book.personages[index] = action.payload.personage;
-
-                    if (state.currentBook?.id === action.payload.bookId) {
-                        state.currentBook.personages[index] = action.payload.personage;
-                    }
+                    state.currentBook.personages[personageIndex] = {
+                        ...newPersonage,
+                        avatar: avatarToKeep,
+                        id: personageId
+                    };
                 }
+            }
+
+            if (state.currentPersonage?.id === personageId) {
+                const currentAvatar = state.currentPersonage.avatar;
+                state.currentPersonage = {
+                    ...newPersonage,
+                    avatar: newPersonage.avatar === null ? currentAvatar : newPersonage.avatar,
+                    id: personageId
+                };
             }
         },
 
@@ -242,7 +262,7 @@ const bookSlice = createSlice({
             state.collectionBooks = state.collectionBooks.filter(collection => collection.id !== action.payload);
         },
 
-        updateCollectionBook: (state, action: PayloadAction<{ id: string; name: string }>) => {
+        updateCollection: (state, action: PayloadAction<{ id: string; name: string }>) => {
             const collection = state.collectionBooks.find(collection => collection.id === action.payload.id);
 
             if (collection) {
@@ -298,6 +318,11 @@ const bookSlice = createSlice({
             });
             state.sortConfig = { key, direction: newDirection };
             state.listBooks = sortedBooks;
+        },
+
+        searchBook: (state, action: PayloadAction<string>) => {
+        state.listBooks = state.books.filter(book =>
+            book.title.toLowerCase().includes(action.payload.toLowerCase()))
         },
 
         setListBooks(state, action: PayloadAction<{
@@ -388,24 +413,23 @@ const bookSlice = createSlice({
 });
 
 export const {
-    setBooks,
     addBook,
     updateBookAvatar,
     removeBook,
     updateBook,
     setCurrentBookById,
-    addPersonage,
     updatePersonage,
     removePersonage,
     addCollection,
     removeCollection,
-    updateCollectionBook,
+    updateCollection,
     setSortConfig,
     setListBooks,
     addBookToCollectionById,
     setCurrentPersonageById,
     setListQuotes,
-    setListPerson
+    setListPerson,
+    searchBook
 } = bookSlice.actions;
 
 export default bookSlice.reducer;
