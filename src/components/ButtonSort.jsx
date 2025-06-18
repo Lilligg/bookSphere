@@ -1,6 +1,6 @@
-import {Box, Button, Typography} from "@mui/material";
-import {useDispatch, useSelector} from "react-redux";
-import {setSortConfig} from "../redux/book/bookSlice.js";
+import { Box, Button, Typography } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortConfig } from "../redux/book/bookSlice.js";
 
 const ButtonSort = (props) => {
     const { configuration } = props;
@@ -9,32 +9,35 @@ const ButtonSort = (props) => {
     const { sortConfig } = useSelector((state) => state.book);
 
     const handleSort = (key) => {
-        // Если уже сортируем по этому полю, меняем направление
         if (sortConfig?.key === key) {
             const newDirection = sortConfig.direction === 'asc' ? 'desc' : 'asc';
             dispatch(setSortConfig({ key, direction: newDirection }));
         } else {
-            // Новое поле сортировки - по умолчанию 'asc'
             dispatch(setSortConfig({ key, direction: 'asc' }));
         }
     };
 
-    // Функция для отображения значка сортировк
     const getSortIcon = (key) => {
         if (sortConfig?.key !== key) return null;
         return sortConfig.direction === 'asc' ? '↑' : '↓';
     };
 
     return (
-        <>
+        <Box>
             {configuration.map((configuration, i) => (
                 <Box mb={3} key={i}>
                     <Typography variant="subtitle1" gutterBottom>
-                        {configuration.title}
+                        {configuration.title}:
                     </Typography>
                     <Button
                         fullWidth
-                        variant="outlined"
+                        variant="contained"
+                        sx={{
+                            color: "#E6CCB2",
+                            borderColor: "#7F5539",
+                            backgroundColor: sortConfig?.key === configuration.sortKey ? '#7F5539' : '#B08968',
+                            fontWeight: 600
+                        }}
                         onClick={() => handleSort(configuration.sortKey)}
                         endIcon={getSortIcon(configuration.sortKey)}
                     >
@@ -44,7 +47,7 @@ const ButtonSort = (props) => {
                     </Button>
                 </Box>
             ))}
-        </>
+        </Box>
     )
 }
 

@@ -4,6 +4,8 @@ import {useEffect, useState} from "react";
 import {setCurrentBookById, updateBookAvatar} from "../redux/book/bookSlice.js";
 import {useParams} from "react-router-dom";
 import {updateUserAvatar} from "../redux/user/userSlice.js";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 
 const AddAvatar = (props) => {
     const { title, type, propAvatar, onAvatarChange } = props;
@@ -105,14 +107,27 @@ const AddAvatar = (props) => {
             mb: 4,
             gap: 2,
         }}>
-            <Typography variant="h6">{title}</Typography>
+            <Typography
+                variant="h6"
+                sx={{
+                    mb: 2,
+                    color: 'text.secondary',
+                    fontWeight: 500,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}
+            >
+                <KeyboardDoubleArrowLeftIcon/>{title}<KeyboardDoubleArrowRightIcon/>
+            </Typography>
+
             <Avatar
                 src={currentAvatar}
                 sx={{
                     width: 150,
                     height: 150,
                     border: '2px solid',
-                    borderColor: 'primary.main'
+                    borderColor: '#7F5539'
                 }}
             />
             <Box sx={{ display: 'flex', gap: 2 }}>
@@ -120,6 +135,10 @@ const AddAvatar = (props) => {
                     <Button
                         component="span"
                         variant="contained"
+                        sx={{
+                            backgroundColor: '#7F5539',
+                            color: '#FFFFFF',
+                        }}
                     >
                         {hasAvatar ? 'Изменить' : 'Загрузить'}
                         <input
@@ -136,6 +155,10 @@ const AddAvatar = (props) => {
                         variant="outlined"
                         color="error"
                         onClick={handleRemoveAvatar}
+                        sx={{
+                            backgroundColor: '#7F5539',
+                            color: '#FFFFFF',
+                        }}
                     >
                         Удалить
                     </Button>

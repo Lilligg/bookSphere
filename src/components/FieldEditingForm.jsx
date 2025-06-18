@@ -2,6 +2,8 @@ import { Box, Typography } from '@mui/material';
 import SelectField from "./SelectField.jsx";
 import MultiSelect from "./MultiSelectField.jsx";
 import TextInputField from "./TextInputField.jsx";
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+import KeyboardDoubleArrowRightIcon from '@mui/icons-material/KeyboardDoubleArrowRight';
 
 const FieldEditingForm = (props) => {
     const  {
@@ -20,10 +22,11 @@ const FieldEditingForm = (props) => {
                     color: 'text.secondary',
                     fontWeight: 500,
                     display: 'flex',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    justifyContent: 'center'
                 }}
             >
-                {group.title}
+                <KeyboardDoubleArrowLeftIcon/>{group.title}<KeyboardDoubleArrowRightIcon/>
             </Typography>
 
             {group.fields.map((field) => {

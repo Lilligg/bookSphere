@@ -24,6 +24,22 @@ const TextInputField = (props) => {
                 autoComplete: "off",
                 ...field.inputProps
             }}
+            sx={{
+                '& .MuiOutlinedInput-root': {
+                    '& fieldset': {
+                        borderColor: '#553924',
+                    },
+                    '&:hover fieldset': {
+                        borderColor: '#553924',
+                    },
+                    '&.Mui-focused fieldset': {
+                        borderColor: '#7F5539',
+                    },
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#7F5539',
+                },
+            }}
         />
     )
 }
