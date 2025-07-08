@@ -43,19 +43,29 @@ const QuoteTabs = (props) => {
     }
 
     return(
-        <Box display="flex" flexDirection="row">
-            <Box width="75%">
+        <Box display="flex" flexDirection={{ xs: 'column-reverse', md: 'row' }} >
+            <Box width={{ xs: '100%', md: '75%' }}>
                 <Box>
                     {listQuote.map((quote, index) => (
                         <QuoteCard quotes={quote} key = {index}/>
                     ))}
                 </Box>
             </Box>
-            <Divider orientation="vertical" flexItem sx={{
-                margin: '0 50px',
-                borderRightWidth: '2px',
-            }} />
-            <Box width="25%">
+            <Divider
+                orientation={{ xs: 'horizontal', md: 'vertical' }}
+                flexItem
+                sx={{
+                    margin: { xs: '0 0px', md: '0 26px'},
+                    borderRightWidth: '2px',
+                }}
+            />
+            <Box
+                display="flex"
+                align-items="center"
+                flexDirection="column"
+                justifyContent="flex-start"
+                width={{ xs: '100%', md: '25%' }}
+            >
                 <Typography variant="body1">Сортировка</Typography>
 
                     <TextField

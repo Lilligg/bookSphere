@@ -107,7 +107,10 @@ const ListBooks = () => {
                     />
                 {/*Боковая панель*/}
                     <Box
-                        width="20%"
+                        sx={{
+                            width: { xs: "30%", md: "20%" },
+                            top: { xs: 0, md: 'auto' },
+                        }}
                     >
                         <Button
                             fullWidth

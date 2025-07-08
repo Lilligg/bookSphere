@@ -10,13 +10,13 @@ const BookInfo = (props) => {
     return(
         <Box
             display="flex"
-            flexDirection="row"
+            flexDirection={{ xs: "column", md: "row" }}
             justifyContent="flex-start"
             position="relative"
+            gap={{ xs: 2, sm: 3, md: 4 }}
         >
             <Box
                 display="flex"
-                flexDirection="column"
                 justifyContent="center"
             >
                 <Avatar
@@ -24,8 +24,8 @@ const BookInfo = (props) => {
                     sx={{
                         width: '210px',
                         height: '210px',
-                        border: '5px solid',
-                        borderColor: '#EDE0D4'
+                        border: '2px solid',
+                        borderColor: '#EDE0D4',
                     }}
                 />
             </Box>
@@ -36,7 +36,7 @@ const BookInfo = (props) => {
                 justifyContent="space-between"
                 marginLeft="40px"
             >
-                <Box marginBottom="40px" paddingRight="100px">
+                <Box marginBottom="40px">
                     <Typography
                         variant="h2"
                         color="#EDE0D4"
@@ -50,8 +50,9 @@ const BookInfo = (props) => {
 
                 <Box
                     display="flex"
-                    flexDirection="row"
+                    flexDirection={{ xs: "column", sm: "row" }}
                     justifyContent="space-between"
+                    gap={{ xs: 2, sm: 3, md: 4 }}
                 >
                     <Box>
                         <Typography variant="h4" color="#EDE0D4">

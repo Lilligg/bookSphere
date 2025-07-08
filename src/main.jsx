@@ -22,7 +22,15 @@ createRoot(document.getElementById('root')).render(
           <PersistGate loading={null} persistor={persistor}>
               <BrowserRouter>
                   <Navigation />
-                  <Box sx={{ maxWidth: 1200, width: '100%', margin: '0 auto', padding: 3 }}>
+                  <Box
+                      sx={{
+                          maxWidth: 1200,
+                          width: '100%',
+                          margin: '0 auto',
+                          padding: { xs: 2, sm: 3 },
+                          boxSizing: 'border-box'
+                      }}
+                  >
                       <Routes>
                           <Route path="/" element={<HomePage />} />
                           <Route path="/UserProfile" element={<UserProfile/>} />

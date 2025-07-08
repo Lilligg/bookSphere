@@ -136,17 +136,16 @@ const EditingBook = () => {
     };
 
     return (
-        <Box backgroundColor = '#E6CCB2' padding="25px">
-            <Box>
-                <Typography variant="h4" gutterBottom align="center" color="#7F5539">
-                    {id? "Изменение данных книги: " + [currentBook.title] :
-                        "Добавление новой книги"
-                    }
-                </Typography>
-            </Box>
+        <Box backgroundColor = '#E6CCB2' padding={{xs: 2, sm: 3}}>
 
-            <Box display="flex" flexDirection="row">
-                <Box width="70%" marginRight="30px">
+            <Typography variant="h4" gutterBottom align="center" color="#7F5539">
+                {id? "Изменение данных книги: " + [currentBook.title] :
+                    "Добавление новой книги"
+                }
+            </Typography>
+
+            <Box display="flex" flexDirection={{xs: "column", md: "row"}}>
+                <Box width={{xs: "100%", md: "70%"}} marginRight={{xs: 0, md: "30px"}}>
                     {EDITING_BOOK_FIELD_GROUP.map((group, index) => (
                         <FieldEditingForm
                             key={index}
@@ -160,9 +159,11 @@ const EditingBook = () => {
                     <Box mt={4}>
                         <Box
                             display="flex"
+                            flexDirection={{xs: "column", sm: "row"}}
                             justifyContent="space-between"
-                            alignItems="center"
+                            alignItems={{xs: "flex-start", sm: "center"}}
                             mb={2}
+                            gap={1}
                         >
                             <Typography variant="h6">
                                 Персонажи ({formData.personages.length})
@@ -171,6 +172,7 @@ const EditingBook = () => {
                                 sx={{
                                     backgroundColor: '#7F5539',
                                     color: '#FFFFFF',
+                                    width: {xs: "100%", sm: "auto"},
                                 }}
                                 variant="contained"
                                 onClick={() => setIsAddPersonageOpen(true)}
@@ -197,15 +199,23 @@ const EditingBook = () => {
                     </Box>
 
                     <Box mt={4}>
-                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                        <Box
+                            display="flex"
+                            flexDirection={{xs: "column", sm: "row"}}
+                            justifyContent="space-between"
+                            alignItems={{xs: "flex-start", sm: "center"}}
+                            mb={2}
+                            gap={1}
+                        >
                             <Typography variant="h6">
                                 Цитаты ({formData.quotes.length})
                             </Typography>
                             <Button
                                 sx={{
-                                backgroundColor: '#7F5539',
-                                color: '#FFFFFF',
-                            }}
+                                    backgroundColor: '#7F5539',
+                                    color: '#FFFFFF',
+                                    width: {xs: "100%", sm: "auto"},
+                                }}
                                 variant="contained"
                                 onClick={() => setIsAddQuoteOpen(true)}
                             >
@@ -243,7 +253,7 @@ const EditingBook = () => {
                     />
                 </Box>
 
-                <Box width="30%">
+                <Box width={{xs: "100%", md: "30%"}} mt={{xs: 4, md: 0}}>
 
                     {EDITING_STATISTIC_BOOK.map((group, index) => (
                         <FieldEditingForm

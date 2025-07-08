@@ -79,7 +79,7 @@ const PersonagesTabs = ({ currentBook }) => {
     const statusOptions = [...new Set(currentBook.personages.map(p => p.characterStatus))];
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column-reverse', md: 'row' }, gap: 3 }}>
             <Box sx={{ flex: 3 }}>
                 <Grid container spacing={3}>
                     {(listPerson || currentBook.personages).map((personage) => (

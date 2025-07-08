@@ -15,7 +15,7 @@ const PersonalInformation = () => {
 
     return (
         <Box sx={{ width: '100%', marginBottom: "30px" }}>
-            <Box display="flex" flexDirection="row" gap={4}>
+            <Box display="flex" flexDirection={{ xs: 'column', sm: "row" }} gap={4}>
                 <Avatar
                     src={user.avatar}
                     sx={{
@@ -23,10 +23,11 @@ const PersonalInformation = () => {
                         height: 250,
                         border: '2px solid',
                         borderColor: 'white',
+                        alignSelf: 'center',
                     }}
                 />
 
-                <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1, alignItems: {xs: 'center', sm: 'flex-start'} }}>
                     <Box>
                         <Typography
                             variant="h2"
