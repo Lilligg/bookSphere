@@ -12,7 +12,6 @@ const {user} = useSelector((state) => state.user);
 
     return (
         <Box sx={{
-            width: '100%',
             backgroundColor: '#E6CCB2',
             borderRadius: '10px',
             p: 3,

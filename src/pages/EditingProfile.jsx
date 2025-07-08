@@ -55,7 +55,7 @@ const EditingProfile = () => {
         const { value } = e.target;
         setFormData(prev => ({
             ...prev,
-            [name]: Array.isArray(value) ? value : [value] // сохраняем массив значений
+            [name]: Array.isArray(value) ? value : [value]
         }));
     };
 
@@ -65,31 +65,53 @@ const EditingProfile = () => {
     };
 
     return (
-        <Box sx={{ width: "100%", mx: 'auto', p: 3, backgroundColor: '#E6CCB2', borderRadius: '15px' }}>
-            <Typography variant="h4" align="center">
+        <Box  backgroundColor = '#E6CCB2'
+              padding={{xs: 2, sm: 3}}
+              sx={{
+                  borderRadius: { xs: 2, sm: 3 },
+                  margin: { xs: 1, sm: 2 }
+              }}
+        >
+            <Typography
+                variant="h4"
+                align="center"
+                sx={{
+                    fontSize: { xs: '1.5rem', sm: '2rem' },
+                    mb: { xs: 2, sm: 3 }
+                }}
+            >
                 Редактирование профиля
             </Typography>
 
-        <Box display="flex" flexDirection="row" marginTop="30px">
-            <Box sx={{ width: "70%"}}>
-            {EDITING_PROFILE_FIELD_GROUPS.map((group, index) => (
-                <FieldEditingForm
-                    key={index}
-                    group={group}
-                    formData={formData}
-                    handleChange={handleChange}
-                    handleMultiSelectChange={handleMultiSelectChange}
-                />
-            ))}
+            <Box display="flex"
+                 flexDirection={{xs: "column", md: "row"}}
 
+            >
+                <Box
+                    sx={{
+                        width: { xs: "100%", md: "70%" },
+                        pr: { md: 2 }
+                    }}
+                >
+                {EDITING_PROFILE_FIELD_GROUPS.map((group, index) => (
+                    <FieldEditingForm
+                        key={index}
+                        group={group}
+                        formData={formData}
+                        handleChange={handleChange}
+                        handleMultiSelectChange={handleMultiSelectChange}
+                    />
+                ))}
+
+                </Box>
+                <Box display="flex" justifyContent="center">
+                    <AddAvatar
+                        title = "Аватар Пользователя"
+                        type = "typeUser"
+                    />
+                </Box>
             </Box>
-            <Box display="flex" justifyContent="center" sx={{ width: "30%"}}>
-                <AddAvatar
-                    title = "Аватар Пользователя"
-                    type = "typeUser"
-                />
-            </Box>
-        </Box>
+
             <Button
                 variant="contained"
                 fullWidth
